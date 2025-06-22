@@ -25,6 +25,29 @@ $(document).ready(function() {
   // KaTeX rendering logic
   document.addEventListener("DOMContentLoaded", function() {
 
+    
+    // --- NEW: Consistent Color Palette ---
+    const softBlue = 'rgba(116, 174, 204, 0.7)';
+    const softBlueBorder = 'rgba(116, 174, 204, 1)';
+    const softOrange = 'rgba(244, 162, 97, 0.7)';
+    const softOrangeBorder = 'rgba(244, 162, 97, 1)';
+    const softGreen = 'rgba(131, 184, 153, 0.7)';
+    const softGreenBorder = 'rgba(131, 184, 153, 1)';
+    const softRed = 'rgba(231, 111, 81, 0.7)';
+    const softRedBorder = 'rgba(231, 111, 81, 1)';
+    const darkBlue = 'rgba(38, 70, 83, 0.7)';
+    const darkBlueBorder = 'rgba(38, 70, 83, 1)';
+    const softYellow = 'rgba(233, 196, 106, 0.7)';
+    const softYellowBorder = 'rgba(233, 196, 106, 1)';
+
+    // New color palette for the pie chart with softer colors
+    const pieChartColors = [
+        '#8dd3c7', '#ffffb3', '#bebada', '#fb8072', '#80b1d3', '#fdb462', '#b3de69', '#fccde5',
+        '#d9d9d9', '#bc80bd', '#ccebc5', '#ffed6f', '#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f',
+        '#cab2d6', '#cccccc', '#48a9a6'
+    ];
+
+
     // Descriptions for the data splits tooltip
     const splitDescriptions = {
         'Best-of-n': 'Problems from the IMOSL, BMOSL, USAMO with solutions specific for best-of-n sampling.',
@@ -34,7 +57,7 @@ $(document).ready(function() {
         'Generic (Test)': 'A general collection of problems from various sources.'
     };
 
-    // --- Chart 1: Data Splits (Unchanged) ---
+    // --- Chart 1: Data Splits (Updated Colors) ---
     const dataSplitsCtx = document.getElementById('dataSplitsChart').getContext('2d');
     new Chart(dataSplitsCtx, {
         type: 'bar',
@@ -44,15 +67,15 @@ $(document).ready(function() {
                 {
                     label: 'Number of Problems',
                     data: [611, 152, 114, 112, 65],
-                    backgroundColor: 'rgba(0, 121, 175, 0.7)',
-                    borderColor: 'rgba(0, 121, 175, 1)',
+                    backgroundColor: softBlue,
+                    borderColor: softBlueBorder,
                     borderWidth: 1
                 },
                 {
                     label: 'Number of Solutions',
                     data: [3011, 252 + 477, 564, 438, 320],
-                    backgroundColor: 'rgba(212, 115, 6, 0.7)',
-                    borderColor: 'rgba(212, 115, 6, 1)',
+                    backgroundColor: softOrange,
+                    borderColor: softOrangeBorder,
                     borderWidth: 1
                 }
             ]
@@ -80,7 +103,7 @@ $(document).ready(function() {
         }
     });
 
-    // --- Chart 2: Problems per Model (Unchanged) ---
+    // --- Chart 2: Problems per Model (Updated Colors) ---
     const modelsCtx = document.getElementById('modelsChart').getContext('2d');
     new Chart(modelsCtx, {
         type: 'bar',
@@ -89,8 +112,8 @@ $(document).ready(function() {
             datasets: [{
                 label: '# of Problems',
                 data: [1615, 892, 890, 878, 461, 326],
-                backgroundColor: 'rgba(75, 192, 192, 0.7)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: softBlue,
+                borderColor: softBlueBorder,
                 borderWidth: 1
             }]
         },
@@ -107,7 +130,7 @@ $(document).ready(function() {
         }
     });
 
-    // --- Chart 3: Problems per Competition (MODIFIED TO PIE CHART) ---
+    // --- Chart 3: Problems per Competition (Updated to Pie Chart with Softer Colors) ---
     const competitionsCtx = document.getElementById('competitionsChart').getContext('2d');
     
     // 1. All competition data is now stored in this single array, aggregated from your table.
@@ -146,11 +169,7 @@ $(document).ready(function() {
             datasets: [{
                 label: '# of Problems',
                 data: chartData,
-                backgroundColor: [ // Expanded color palette for all 19 slices
-                    '#e6194B', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#42d4f4', '#f032e6',
-                    '#bfef45', '#fabed4', '#469990', '#dcbeff', '#9A6324', '#fffac8', '#800000', '#aaffc3',
-                    '#808000', '#ffd8b1', '#000075'
-                ],
+                backgroundColor: pieChartColors,
                 hoverOffset: 4
             }]
         },
@@ -218,7 +237,7 @@ $(document).ready(function() {
         'Ranking (Swiss)': [0.265, 0.299, 0.340, 0.366, 0.396, 0.424, 0.441, 0.465]
     };
 
-    // Chart for Conclusion 1
+    // Chart for Conclusion 1 (Updated Colors)
     const conclusion1Ctx = document.getElementById('conclusion1Chart').getContext('2d');
     new Chart(conclusion1Ctx, {
         type: 'bar',
@@ -227,7 +246,7 @@ $(document).ready(function() {
             datasets: [{
                 label: 'Weighted Average Score',
                 data: Object.values(weightedScores),
-                backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0', '#607D8B']
+                backgroundColor: [softBlue, softOrange, softGreen, softRed, darkBlue]
             }]
         },
         options: {
@@ -247,7 +266,7 @@ $(document).ready(function() {
         }
     });
 
-    // Chart for Conclusion 2 (UPDATED)
+    // Chart for Conclusion 2 (Updated Colors)
     const conclusion2Ctx = document.getElementById('conclusion2Chart').getContext('2d');
     const nlModels = Object.keys(naturalLanguageProofCorrectness);
     const nlScores = Object.values(naturalLanguageProofCorrectness);
@@ -260,7 +279,7 @@ $(document).ready(function() {
             datasets: [{
                 label: 'Correctness Score',
                 data: allScores,
-                backgroundColor: ['#008CBA', '#008CBA', '#008CBA', '#008CBA', '#008CBA', '#f44336']
+                backgroundColor: [...Array(nlModels.length).fill(softBlue), softRed]
             }]
         },
         options: {
@@ -280,7 +299,7 @@ $(document).ready(function() {
         }
     });
     
-    // Chart for Conclusion 3
+    // Chart for Conclusion 3 (Updated Colors)
     const conclusion3Ctx = document.getElementById('conclusion3Chart').getContext('2d');
     new Chart(conclusion3Ctx, {
         type: 'bar',
@@ -290,12 +309,12 @@ $(document).ready(function() {
                 {
                     label: 'Final-Answer Correctness',
                     data: Object.values(finalAnswerVsProofCorrectness).map(v => v[0]),
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                    backgroundColor: softBlue
                 },
                 {
                     label: 'Proof Correctness',
                     data: Object.values(finalAnswerVsProofCorrectness).map(v => v[1]),
-                    backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                    backgroundColor: softOrange
                 }
             ]
         },
@@ -315,17 +334,25 @@ $(document).ready(function() {
         }
     });
 
-    // Chart for Conclusion 4 (UPDATED)
+    // Chart for Conclusion 4 (Updated Colors)
     const conclusion4Ctx = document.getElementById('conclusion4Chart').getContext('2d');
+    const lineChartColors = [
+        '#4e79a7', // Muted Blue
+        '#f28e2c', // Muted Orange
+        '#e15759', // Muted Red
+        '#76b7b2', // Muted Teal
+        '#af7aa1'  // Muted Purple
+    ];
     new Chart(conclusion4Ctx, {
         type: 'line',
         data: {
             labels: [...Array(8).keys()].map(i => i + 1),
-            datasets: Object.keys(scoresSelectorMethods).map(method => ({
+            datasets: Object.keys(scoresSelectorMethods).map((method, index) => ({
                 label: method,
                 data: scoresSelectorMethods[method],
                 fill: false,
-                tension: 0.1
+                tension: 0.1,
+                borderColor: lineChartColors[index % lineChartColors.length]
             }))
         },
         options: {
@@ -345,9 +372,8 @@ $(document).ready(function() {
                     }
                 },
                 y: {
-                    // beginAtZero: false, // No longer forcing start at 0
-                    min: 0.25,          // Set minimum for y-axis
-                    max: 0.60,          // Set maximum for y-axis
+                    min: 0.25,
+                    max: 0.60,
                     title: {
                         display: true,
                         text: 'Score'
