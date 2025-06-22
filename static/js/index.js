@@ -43,14 +43,14 @@ $(document).ready(function() {
             datasets: [
                 {
                     label: 'Number of Problems',
-                    data: [602, 152, 114, 112, 65],
+                    data: [611, 152, 114, 112, 65],
                     backgroundColor: 'rgba(0, 121, 175, 0.7)',
                     borderColor: 'rgba(0, 121, 175, 1)',
                     borderWidth: 1
                 },
                 {
                     label: 'Number of Solutions',
-                    data: [2966, 252 + 477, 564, 438, 320],
+                    data: [3011, 252 + 477, 564, 438, 320],
                     backgroundColor: 'rgba(212, 115, 6, 0.7)',
                     borderColor: 'rgba(212, 115, 6, 1)',
                     borderWidth: 1
@@ -88,7 +88,7 @@ $(document).ready(function() {
             labels: ['o4-mini', 'o3', 'Qwen3-235B', 'Gemini-2.5-Pro', 'Grok-3-Mini', 'Deepseek-R1 (05/28)'],
             datasets: [{
                 label: '# of Problems',
-                data: [1542, 832, 830, 821, 445, 282],
+                data: [1615, 892, 890, 878, 461, 326],
                 backgroundColor: 'rgba(75, 192, 192, 0.7)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
@@ -112,24 +112,24 @@ $(document).ready(function() {
     
     // 1. All competition data is now stored in this single array, aggregated from your table.
     const competitionSourceData = [
-        { abbr: 'IMO SL', fullName: 'IMO Shortlist', problems: 140, desc: 'Shortlist of problems, from which the IMO is selected' },
-        { abbr: 'Putnam', fullName: 'Putnam', problems: 121, desc: 'Undergraduate competition, regarded as one of the most difficult' },
-        { abbr: 'Balkan SL', fullName: 'Balkan MO Shortlist', problems: 111, desc: 'Competition between Balkan countries' },
-        { abbr: 'USAMO', fullName: 'USAMO', problems: 74, desc: 'The final round of the USA Math Olympiad' },
-        { abbr: 'Baltic Way', fullName: 'Baltic Way MO', problems: 60, desc: 'Northern and Central European Olympiad' },
-        { abbr: 'Irish MO', fullName: 'Irish MO', problems: 50, desc: 'Final round of the Irish Olympiad' },
-        { abbr: 'Bulgarian SC', fullName: 'Bulgarian Seasonal Competitions', problems: 43, desc: 'Seasonal Competitions hosted in Bulgaria (8th-12th grade)' },
-        { abbr: 'EGMO', fullName: "European Girls' MO", problems: 37, desc: 'Europe-wide olympiad allowing only girls as participants' },
-        { abbr: 'IZHO', fullName: 'International Zhautykov MO', problems: 35, desc: 'Kazakhstan-based olympiad with near-IMO-level questions' },
+        { abbr: 'IMO SL', fullName: 'IMO Shortlist', problems: 178, desc: 'Shortlist of problems, from which the IMO is selected' },
+        { abbr: 'Putnam', fullName: 'Putnam', problems: 122, desc: 'Undergraduate competition, regarded as one of the most difficult' },
+        { abbr: 'BMOSL', fullName: 'Balkan MO Shortlist', problems: 106, desc: 'Competition between Balkan countries' },
+        { abbr: 'USAMO', fullName: 'USAMO', problems: 64, desc: 'The final round of the USA Math Olympiad' },
+        { abbr: 'Baltic Way', fullName: 'Baltic Way MO', problems: 80, desc: 'Northern and Central European Olympiad' },
+        { abbr: 'Irish MO', fullName: 'Irish MO', problems: 51, desc: 'Final round of the Irish Olympiad' },
+        { abbr: 'Bulgarian SC', fullName: 'Bulgarian Seasonal Competitions', problems: 49, desc: 'Seasonal Competitions hosted in Bulgaria (8th-12th grade)' },
+        { abbr: 'EGMO', fullName: "European Girls' MO", problems: 47, desc: 'Europe-wide olympiad allowing only girls as participants' },
+        { abbr: 'IZHO', fullName: 'International Zhautykov MO', problems: 41, desc: 'Kazakhstan-based olympiad with near-IMO-level questions' },
         { abbr: 'SMT', fullName: 'SMT 2025', problems: 33, desc: 'Answer-based competition hosted by Stanford' },
         { abbr: 'IMC', fullName: 'IMC', problems: 29, desc: 'International competition for university students' },
         { abbr: 'BRUMO', fullName: 'BRUMO 2025', problems: 28, desc: 'Answer-based competition hosted by Brown University' },
-        { abbr: 'BMO Prelim', fullName: 'British MO Prelim', problems: 26, desc: 'Preliminary round for the British Olympiad' },
+        { abbr: 'BMO Prelim', fullName: 'British MO Prelim', problems: 28, desc: 'Preliminary round for the British Olympiad' },
         { abbr: 'HMMT', fullName: 'HMMT February 2025', problems: 26, desc: 'Answer-based competition hosted by Harvard and MIT' },
         { abbr: 'AIME', fullName: 'AIME 2025', problems: 24, desc: 'Answer-based competition, serving as a qualifier for the USAMO' },
-        { abbr: 'USA JMO', fullName: 'USA Junior MO', problems: 22, desc: 'USA olympiad that allows only junior students' },
-        { abbr: 'BMO Final', fullName: 'British MO Final', problems: 20, desc: 'Final round of the British Olympiad' },
-        { abbr: 'RMM', fullName: 'Romanian Masters of Mathematics Extralist', problems: 20, desc: 'IMO-level competition hosted in Romania' },
+        { abbr: 'USA JMO', fullName: 'USA Junior MO', problems: 25, desc: 'USA olympiad that allows only junior students' },
+        { abbr: 'BMO Final', fullName: 'British MO Final', problems: 23, desc: 'Final round of the British Olympiad' },
+        { abbr: 'RMM', fullName: 'Romanian Masters of Mathematics Extralist', problems: 33, desc: 'IMO-level competition hosted in Romania' },
         { abbr: 'Swiss MO', fullName: 'Swiss MO', problems: 8, desc: 'Various problems from the Swiss Olympiad' }
     ];
 
