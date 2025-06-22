@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta property="og:title" content="The Open Proof Corpus"/>
+  <meta property="og:description" content="The Open Proof Corpus is a large-scale, human-validated dataset comprising over 5000 LLM-generated proofs across more than 1000 problems."/>
+  <meta property="description" content="The Open Proof Corpus is a large-scale, human-validated dataset comprising over 5000 LLM-generated proofs across more than 1000 problems."/>
+
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="keywords" content="Math, LLM, Olympiads, Competitions, Leaderboards, AI, Machine Learning, Grading"/>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>The Open Proof Corpus</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.js">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+      ></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="static/js/data.js"></script>
+  <script src="static/js/index.js"></script>
+  
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/example.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+  <nav class="sticky-nav" id="sticky-navbar">
+    <div class="nav-title">Open Proof Corpus</div>
+    <div class="nav-links" id="nav-links">
+      <a href="#paper-link" class="action-button">
+        <img src="static/images/pdf-icon.png" alt="Paper Icon"> Paper
+      </a>
+      <a href="https://github.com/insait-institute/open-proof-corpus" class="action-button">
+        <img src="static/images/github-mark.svg" alt="Code Icon"> Code
+      </a>
+      <a href="https://huggingface.co/datasets/INSAIT-Institute/OPC" class="action-button">
+        <img src="static/images/hf-logo.png" alt="Dataset Icon"> Dataset
+      </a>
+    </div>
+    <button class="hamburger" id="hamburger-menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </nav>
+
+  
+    <div class="main-content">
+      <section class="white-bg">
+        <div class="content-container">
+          <h1 class="main-title">The Open Proof Corpus: A Large-Scale Study of LLM-Generated Mathematical Proofs</h1>
+          <p class="author-list">
+            Jasper Dekoninck*, Ivo Petrov*, Kristian Minchev, Miroslav Marinov, Maria Drencheva, Nikolay Georgiev, Kaloyan Tsvetkov, Nikolay Drenchev, Lazar Todorov, Luba Konova, Milen Shumanov, Vanesa Kalinkova, Mislav Balunovic, Martin Vechev
+          </p>
+
+          <div class="org-logos">
+            <div class="org-logo">
+              <a href="https://insait.ai/" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/insait_logo.png" alt="INSAIT">
+              </a>
+            </div>
+            <div class="org-logo">
+              <a href="https://www.sri.inf.ethz.ch/" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/sri-logo.svg" alt="SRI Lab">
+              </a>
+            </div>
+            <div class="org-logo">
+              <a href="https://ethz.ch/en.html" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/ETH_Zürich.svg" alt="ETH Zurich">
+              </a>
+            </div>
+          </div>
+
+          <div class="button-group" id="button-group-original">
+            <a href="#paper-link" class="action-button">
+              <img src="static/images/pdf-icon.png" alt="Paper Icon">
+              Paper
+            </a>
+            <a href="#code-link" class="action-button">
+              <img src="static/images/github-mark.svg" alt="Code Icon">
+              Code
+            </a>
+            <a href="#dataset-link" class="action-button">
+              <img src="static/images/hf-logo.png" alt="Dataset Icon">
+              Dataset
+            </a>
+          </div>
+
+          <p class="summary-text">
+            We present the Open Proof Corpus (OPC), a dataset comprising over 5,000 human-evaluated proofs produced by state-of-the-art LLMs. The OPC was specifically designed for broad applicability in proof generation research.
+          </p>
+        </div>
+      </section>
+
+      <section class="grey-bg">
+        <div class="content-container">
+          <h2>Key Finding</h2>
+          <p>Models are impressive judges of proof correctness, and we can finetune a small 8B model on the OPC to match the performance of the best closed-source model, Gemini-Pro-2.5</p>
+          <p style="text-align: center; font-size: 0.9em; color: #666;">
+            Table 1: Benchmarking LLMs as proof graders. Cost for running the model on the entire subset is given in USD.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Judge</th>
+                <th>pass@1</th>
+                <th>maj@5</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Human</td>
+                <td>90.4</td>
+                <td>-</td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td>Gemini-2.5-Pro</td>
+                <td>85.4</td>
+                <td>88.1</td>
+                <td>135.47</td>
+              </tr>
+              <tr>
+                <td><strong>OPC-R1-8B</strong></td>
+                <td>83.8</td>
+                <td>88.1</td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td>o4-mini</td>
+                <td>83.8</td>
+                <td>85.3</td>
+                <td>29.57</td>
+              </tr>
+              <tr>
+                <td>o3</td>
+                <td>83.1</td>
+                <td>84.3</td>
+                <td>93.3</td>
+              </tr>
+              <tr>
+                <td>Qwen3-235B-A22B</td>
+                <td>81.8</td>
+                <td>84.6</td>
+                <td>3.79</td>
+              </tr>
+              <tr>
+                <td>Deepseek-R1</td>
+                <td>80.9</td>
+                <td>82.6</td>
+                <td>27.35</td>
+              </tr>
+              <tr>
+                <td>DeepSeek-R1-Qwen3-8B</td>
+                <td>70.7</td>
+                <td>71.3</td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td>Qwen3-8B</td>
+                <td>64.4</td>
+                <td>63.6</td>
+                <td>N/A</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+      </section>
+
+      <section class="white-bg">
+        <div class="content-container">
+          <h2>Dataset Statistics</h2>
+          
+          <div class="stats-cards-container">
+            <div class="stat-card">
+              <div class="stat-value">1,001</div>
+              <div class="stat-label">Problems</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">5,017</div>
+              <div class="stat-label">Solutions Generated</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">43%</div>
+              <div class="stat-label">Correct Proofs</div>
+            </div>
+          </div>
+    
+          <div class="charts-row">
+        
+            <div class="chart-container">
+              <!-- <h3>Distribution by Data Split</h3> -->
+              <canvas id="dataSplitsChart"></canvas>
+            </div>
+    
+            <div class="chart-container">
+              <!-- <h3>Problems per Model</h3> -->
+              <canvas id="modelsChart"></canvas>
+            </div>
+    
+          </div>
+          <div class="chart-container pie-chart-container">
+            <!-- <h3>Problems per Competition Source</h3> -->
+            <canvas id="competitionsChart"></canvas>
+          </div>
+    
+        </div>
+    </section>
+
+    <section class="grey-bg">
+      <div class="content-container">
+        <h2>Conclusions and Insights</h2>
+        <p>Based on our analysis of the OPC, we draw four additional key conclusions regarding the current capabilities and limitations of LLMs in natural language proof generation.</p>
+        <ul>
+          <li>LLMs demonstrate strong potential for generating correct proofs, with the best model currently being Gemini-2.5-Pro.</li>
+          <li>Natural language proof generation significantly outperforms formal proof generation by a factor of 11.</li>
+          <li>There is a significant difference between final-answer correctness and proof validity. This difference also differs between models</li>
+          <li>Best-of-n selection strategies are very effective, with the best strategies using pairwise comparisons for increased effectiveness.</li>
+        </ul>
+        <div class="charts-row">
+          <div class="chart-container">
+            <canvas id="conclusion1Chart"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="conclusion2Chart"></canvas>
+          </div>
+        </div>
+        <div class="charts-row">
+          <div class="chart-container">
+            <canvas id="conclusion3Chart"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="conclusion4Chart"></canvas>
+          </div>
+        </div>
+    </section>
+
+      <section class="white-bg">
+        <div class="content-container">
+          <h2>Dataset Examples</h2>
+          <p>This section showcases several examples from our dataset. More examples in the format as they were presented to the judges can be found at <a href="https://judgeproofs.xyz/sample" target="_blank">judgeproofs.xyz/sample</a>.</p>
+          <div id="problem-container"></div>
+      </section>
+
+      
+
+      <section class="grey-bg">
+        <div class="content-container">
+          <h2>Citation</h2>
+          <div class="citation-block">
+            <pre><code>@article{openproofcorpus2025,
+              title={The Open Proof Corpus: A Large-Scale Human Study of LLM Proofs},
+              author={Jasper Dekoninck and Ivo Petrov and  Kristian Minchev and Miroslav Marinov and Maria Drencheva and Lyuba Konova and Milen Milenov Shumanov and Kaloyan Tsvetkov and Nikolay Drenchev and Lazar D. Todorov and Kalina Nikolova and Nikolay Georgiev and Vanesa Kalinkova and Margulan Ismoldayev and Mislav Balunovic and Martin Vechev},
+              journal={arXiv},
+              year={2025},
+            }</code></pre>
+          </div>
+        </div>
+      </section>
+
+    </div>
+</body>
+</html>
