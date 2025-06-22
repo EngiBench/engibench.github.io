@@ -82,6 +82,7 @@ $(document).ready(function() {
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 tooltip: {
                     callbacks: {
@@ -120,6 +121,7 @@ $(document).ready(function() {
         options: {
             indexAxis: 'y',
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
                 title: { display: true, text: 'Model Contribution' }
