@@ -186,7 +186,6 @@
         <div class="content-container">
           <h2>Dataset Statistics</h2>
           <p>The OPC consists of 1,010 problems drawn from 20 national and internal mathematical competitions. It contains 5,062 solutions generation by 6 state-of-the-art LLMs. 43% of the proofs in the OPC are correct.</p>
-          
           <div class="stats-cards-container">
             <div class="stat-card">
               <div class="stat-value">1,010</div>
@@ -201,6 +200,16 @@
               <div class="stat-label">Correct Proofs</div>
             </div>
           </div>
+          <p>To investigate important open questions regarding LLM proof generation capabilities, the dataset consists of five key splits:</p>
+
+          <ul>
+            <li><strong>MathArena</strong>: Problems from MathArena to compare final-answer correctness and proof validity.</li>
+            <li><strong>PutnamBench</strong>: Problems from PutnamBench to compare formal and natural language proof generation.</li>
+            <li><strong>Best-of-n</strong>: Problems from various mathematical competitions to investigate best-of-n selection strategies.</li>
+            <li><strong>Generic (Train)</strong>: Problems from various mathematical competitions to further research in the area of proof generation.</li>
+            <li><strong>Generic (Test)</strong>: Problems from various mathematical competitions to test judging capabilities of current LLMs.</li>
+          </ul>
+          
     
           <div class="charts-row">
         
