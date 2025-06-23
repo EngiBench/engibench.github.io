@@ -257,7 +257,7 @@ $(document).ready(function() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'LLM Performance in Natural Language Proof Generation'
+                    text: 'Top LLMs for proof generation'
                 },
                 legend: { display: false }
             },
@@ -290,7 +290,7 @@ $(document).ready(function() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Natural Language vs. Formal Proof Correctness'
+                    text: 'Formal proof generation is much harder for LLMs'
                 },
                 legend: { display: false }
             },
@@ -326,7 +326,7 @@ $(document).ready(function() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Final-Answer Correctness vs. Proof Correctness'
+                    text: 'Correct answer does not imply correct proof'
                 }
             },
             scales: {
@@ -363,7 +363,7 @@ $(document).ready(function() {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Effectiveness of Best-of-n Selection Strategies'
+                    text: 'Best-of-n improves proof performance'
                 }
             },
             scales: {
