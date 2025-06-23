@@ -124,7 +124,7 @@ $(document).ready(function() {
             maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
-                title: { display: true, text: 'Model Contribution' }
+                title: { display: true, text: 'Number of Solutions per Model' }
             },
             scales: {
                 x: { title: { display: true, text: 'Number of Solutions' } }
