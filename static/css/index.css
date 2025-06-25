@@ -307,3 +307,10 @@ table tbody tr:last-of-type {
     min-width: 0; /* Important for flex items to shrink properly */
 }
 }
+
+/* Media query for screens less than 720px */
+@media (max-width: 719px) {
+    .cost-column {
+      display: none;
+    }
+  }
