@@ -135,14 +135,17 @@ h3 {
 }
 table {
     width: 70%;
+    max-width: 70%;
     border-collapse: collapse;
     margin: 25px auto;
     font-size: 0.9em;
-    min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    overflow: hidden;
+    overflow-x: auto;
+    /* overflow: hidden; */
+    
 }
+
 table thead tr {
     background-color: #0079AF;
     color: #ffffff;
@@ -312,5 +315,9 @@ table tbody tr:last-of-type {
 @media (max-width: 719px) {
     .cost-column {
       display: none;
+    }
+    table {
+        width: 95%;
+        max-width: 95%;
     }
   }
