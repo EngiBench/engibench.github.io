@@ -1,2 +1,2 @@
-## Website for The Open Proof Corpus
-See [https://proofcorpus.ai](https://proofcorpus.ai).
+## Website for EngiBench
+See [https://engibench.github.io/](https://engibench.github.io/).
