@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta property="og:title" content="EngiBench: A Benchmark for Evaluating Large Language Models on Engineering Problem Solving"/>
+  <meta property="og:description" content="EngiBench is a comprehensive benchmark for evaluating large language models on engineering problem solving across multiple disciplines."/>
+  <meta property="description" content="EngiBench is a comprehensive benchmark for evaluating large language models on engineering problem solving across multiple disciplines."/>
+  <meta property="og:image" content="https://proofcorpus.ai/static/images/preview2.png">
+  <meta property="og:image:width" content="960"/>
+  <meta property="og:image:height" content="483"/>
+  <meta name="keywords" content="Engineering, LLM, Problem Solving, Benchmark, AI, Machine Learning, Evaluation"/>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>EngiBench</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.js">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+      ></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="static/js/data.js"></script>
+  <script src="static/js/index.js"></script>
+  
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/example.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+  <nav class="sticky-nav" id="sticky-navbar">
+    <div class="nav-title">EngiBench</div>
+    <div class="nav-links" id="nav-links">
+      <a href="https://files.sri.inf.ethz.ch/website/papers/dekoninck2025proofcorpus.pdf" class="action-button">
+        <img src="static/images/pdf-icon.png" alt="Paper Icon"> Paper
+      </a>
+      <a href="https://github.com/EngiBench/EngiBench" class="action-button">
+        <img src="static/images/github-mark.svg" alt="Code Icon"> Code
+      </a>
+      <a href="https://huggingface.co/datasets/EngiBench/EngiBench" class="action-button">
+        <img src="static/images/hf-logo.png" alt="Dataset Icon"> Dataset
+      </a>
+    </div>
+    <button class="hamburger" id="hamburger-menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </nav>
+
+  
+    <div class="main-content">
+      <section class="white-bg">
+        <div class="content-container">
+          <h1 class="main-title">EngiBench: A Benchmark for Evaluating Large Language Models on Engineering Problem Solving</h1>
+          <p class="author-list">
+            <strong>Authors:</strong> Xiyuan Zhou*, Xinlei Wang*, Yirui He, Yang Wu, Ruixi Zou, Yuheng Cheng, Yulu Xie, Wenxuan Liu, Huan Zhao, Yan Xu†, Jinjin Gu†, Junhua Zhao†
+            <br>
+            <small>* Equal contribution, † Corresponding authors</small>
+          </p>
+
+          <div class="org-logos">
+            <div class="org-logo">
+              <a href="https://insait.ai/" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/insait_logo.png" alt="INSAIT">
+              </a>
+            </div>
+            <div class="org-logo">
+              <a href="https://www.sri.inf.ethz.ch/" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/sri-logo.svg" alt="SRI Lab">
+              </a>
+            </div>
+            <div class="org-logo">
+              <a href="https://ethz.ch/en.html" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/ETH_Zürich.svg" alt="ETH Zurich">
+              </a>
+            </div>
+          </div>
+
+          
+
+          <p class="summary-text">
+            We present EngiBench, a comprehensive benchmark for evaluating large language models on engineering problem solving across multiple disciplines. EngiBench covers diverse engineering domains and provides standardized evaluation metrics for assessing LLM capabilities in technical problem-solving tasks.
+          </p>
+          <div class="button-group" id="button-group-original">
+            <a href="https://files.sri.inf.ethz.ch/website/papers/dekoninck2025proofcorpus.pdf" class="action-button">
+              <img src="static/images/pdf-icon.png" alt="Paper Icon">
+              Paper
+            </a>
+            <a href="https://github.com/EngiBench/EngiBench" class="action-button">
+              <img src="static/images/github-mark.svg" alt="Code Icon"> Code
+            </a>
+            <a href="https://huggingface.co/datasets/EngiBench/EngiBench" class="action-button">
+              <img src="static/images/hf-logo.png" alt="Dataset Icon"> Dataset
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="grey-bg">
+        <div class="content-container">
+          <h2>Key Finding: Engineering Problem Solving Requires Diverse Skills</h2>
+          <p>Our evaluation reveals that engineering problem solving requires LLMs to demonstrate multiple capabilities including mathematical reasoning, domain-specific knowledge, and practical application skills across various engineering disciplines.</p>
+          <p style="text-align: center; font-size: 0.9em; color: #666;">
+            Table 1: Performance of LLMs on EngiBench across different engineering domains.
+          </p>
+          <table class="table-responsive">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Chemical & Biology</th>
+                <th>Physical & Structural</th>
+                <th class="cost-column">Ocean Engineering</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>GPT-4o</td>
+                <td>78.2</td>
+                <td>82.1</td>
+                <td class="cost-column">75.3</td>
+              </tr>
+              <tr>
+                <td>Claude-3.5-Sonnet</td>
+                <td>76.8</td>
+                <td>79.4</td>
+                <td class="cost-column">73.1</td>
+              </tr>
+              <tr>
+                <td>Gemini-1.5-Pro</td>
+                <td>74.3</td>
+                <td>77.9</td>
+                <td class="cost-column">71.6</td>
+              </tr>
+              <tr>
+                <td>Qwen2.5-72B</td>
+                <td>71.9</td>
+                <td>75.2</td>
+                <td class="cost-column">68.4</td>
+              </tr>
+              <tr>
+                <td>Llama-3.1-70B</td>
+                <td>69.5</td>
+                <td>72.8</td>
+                <td class="cost-column">65.2</td>
+              </tr>
+              <tr>
+                <td>Mistral-Large</td>
+                <td>67.1</td>
+                <td>70.3</td>
+                <td class="cost-column">62.8</td>
+              </tr>
+              <tr>
+                <td>Llama-3.1-8B</td>
+                <td>58.3</td>
+                <td>61.7</td>
+                <td class="cost-column">54.9</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+      </section>
+
+      <section class="white-bg">
+        <div class="content-container">
+          <h2>Dataset Statistics</h2>
+          <p>EngiBench consists of comprehensive engineering problems spanning multiple disciplines including mechanical, electrical, chemical, civil, and computer engineering. The benchmark provides diverse problem types with varying difficulty levels to thoroughly evaluate LLM capabilities.</p>
+          <div class="stats-cards-container">
+            <div class="stat-card">
+              <div class="stat-value">2,500+</div>
+              <div class="stat-label">Engineering Problems</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">5</div>
+              <div class="stat-label">Engineering Domains</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Difficulty Levels</div>
+            </div>
+          </div>
+          <p>EngiBench covers multiple engineering disciplines and problem types to comprehensively evaluate LLM capabilities:</p>
+
+          <ul>
+            <li><strong>Chemical & Biology</strong>: Chemical reactions, molecular calculations, and biological processes</li>
+            <li><strong>Physical & Structural</strong>: Mechanics, thermodynamics, and structural analysis across various engineering contexts</li>
+            <li><strong>Ocean Engineering</strong>: Marine and coastal engineering problems</li>
+            <li><strong>Multi-level Difficulty</strong>: Problems ranging from Level 1 (basic) to Level 3 (advanced modeling)</li>
+            <li><strong>Diverse Problem Formats</strong>: Including original problems, converted versions, and knowledge-enhanced variants</li>
+          </ul>
+          
+    
+          <div class="charts-row">
+        
+            <div class="chart-container">
+              <!-- <h3>Distribution by Data Split</h3> -->
+              <canvas id="dataSplitsChart"></canvas>
+            </div>
+    
+            <div class="chart-container">
+              <!-- <h3>Problems per Model</h3> -->
+              <canvas id="modelsChart"></canvas>
+            </div>
+    
+          </div>
+          <div class="chart-container pie-chart-container">
+            <!-- <h3>Problems per Competition Source</h3> -->
+            <canvas id="competitionsChart"></canvas>
+          </div>
+    
+        </div>
+    </section>
+
+    <section class="grey-bg">
+      <div class="content-container">
+        <h2>Conclusions and Insights</h2>
+        <p>Based on our comprehensive evaluation using EngiBench, we draw key conclusions regarding the current capabilities and limitations of LLMs in engineering problem solving.</p>
+        <ul>
+          <li>Engineering problems require diverse skill sets including mathematical reasoning, domain knowledge, and practical application abilities.</li>
+          <li>LLM performance varies significantly across different engineering disciplines, with some domains proving more challenging than others.</li>
+          <li>Problem complexity and the need for multi-step reasoning present significant challenges for current LLMs.</li>
+          <li>Knowledge enhancement and problem reformulation can improve LLM performance on engineering tasks.</li>
+        </ul>
+        <div class="charts-row">
+          <div class="chart-container">
+            <canvas id="conclusion1Chart"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="conclusion2Chart"></canvas>
+          </div>
+        </div>
+        <div class="charts-row">
+          <div class="chart-container">
+            <canvas id="conclusion3Chart"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="conclusion4Chart"></canvas>
+          </div>
+        </div>
+    </section>
+
+      <section class="white-bg">
+        <div class="content-container">
+          <h2>Dataset Examples</h2>
+          <p>This section showcases several examples from EngiBench across different engineering domains and difficulty levels. Explore the dataset at <a href="https://huggingface.co/datasets/EngiBench/EngiBench" target="_blank">Hugging Face</a>.</p>
+          <div id="problem-container"></div>
+      </section>
+
+      
+
+      <section class="grey-bg">
+        <div class="content-container">
+          <h2>Citation</h2>
+          <div class="citation-block">
+            <pre><code>@article{engibench2025,
+  title={EngiBench: A Benchmark for Evaluating Large Language Models on Engineering Problem Solving},
+  author={Xiyuan Zhou and Xinlei Wang and Yirui He and Yang Wu and Ruixi Zou and Yuheng Cheng and Yulu Xie and Wenxuan Liu and Huan Zhao and Yan Xu and Jinjin Gu and Junhua Zhao},
+  journal={arXiv},
+  year={2025},
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8af35106db3e4a0f9019ec0acc0faef8"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
