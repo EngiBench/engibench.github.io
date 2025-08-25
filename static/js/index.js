@@ -1,3 +1,33 @@
+// Global toggle function for collapsible examples
+function toggleExample(exampleId) {
+    const example = document.getElementById(exampleId);
+    
+    if (!example) {
+        console.error('Example element not found:', exampleId);
+        return;
+    }
+    
+    const toggle = example.previousElementSibling;
+    
+    if (!toggle) {
+        console.error('Toggle element not found for:', exampleId);
+        return;
+    }
+    
+    const arrow = toggle.querySelector('.toggle-arrow');
+    const strongElement = toggle.querySelector('strong');
+    
+    if (example.style.display === 'none' || example.style.display === '') {
+        example.style.display = 'block';
+        if (arrow) arrow.classList.add('rotated');
+        if (strongElement) strongElement.textContent = '📖 Hide Example';
+    } else {
+        example.style.display = 'none';
+        if (arrow) arrow.classList.remove('rotated');
+        if (strongElement) strongElement.textContent = '📖 Show Example';
+    }
+}
+
 $(document).ready(function() {
     // Sticky Nav functionality
     const navbar = $('#sticky-navbar');
@@ -204,6 +234,131 @@ $(document).ready(function() {
             }
         }
     });
+
+    // --- NEW: Key Finding Charts ---
+    // Level 1 and Level 2 Accuracy Chart (按照图片中的确切数值和顺序)
+    const levelAccuracyCtx = document.getElementById('levelAccuracyChart').getContext('2d');
+    const modelNames = [
+        'Gemini 2.5 Flash', 'GPT-4.1', 'Llama 4', 'Claude 3.7 Sonnet', 'Gemini-2.0 Flash',
+        'GPT-4.1 Mini', 'DeepSeek-V3', 'GLM-4-32B', 'Claude 3.5 Sonnet', 'GPT-4.1 Nano',
+        'Qwen2.5-72B', 'Llama 3.3', 'DeepSeek-R1 7B', 'GLM-4-9B', 'Qwen2.5-7B', 'Mistral-8x7B'
+    ];
+    const level1Data = [95.12, 87.50, 90.23, 84.06, 86.29, 83.48, 87.47, 83.52, 82.06, 84.70, 77.61, 76.91, 75.67, 75.84, 73.05, 60.27];
+    const level2Data = [91.72, 81.53, 76.33, 72.96, 69.57, 68.95, 63.64, 62.96, 62.37, 59.07, 54.40, 52.51, 52.51, 50.53, 37.31, 30.00];
+
+    new Chart(levelAccuracyCtx, {
+        type: 'bar',
+        data: {
+            labels: modelNames,
+            datasets: [
+                {
+                    label: 'Level 1',
+                    data: level1Data,
+                    backgroundColor: softBlue,
+                    borderColor: softBlueBorder,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Level 2',
+                    data: level2Data,
+                    backgroundColor: '#ffb3ba',
+                    borderColor: '#ff8a95',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Level 1 and Level 2 Accuracy'
+                },
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    max: 100,
+                    title: { display: true, text: 'Accuracy (%)' }
+                },
+                x: { 
+                    ticks: { 
+                        maxRotation: 45,
+                        font: { size: 9 }
+                    }
+                }
+            }
+        }
+    });
+
+    // Level 3 Score Chart (按照图片中的确切数值和顺序)
+    const level3ScoreCtx = document.getElementById('level3ScoreChart').getContext('2d');
+    const level3Models = [
+        'GPT-4.1', 'Claude 3.7 Sonnet', 'GPT-4.1 Mini', 'DeepSeek-V3', 'Gemini 2.5 Flash',
+        'Gemini 2.0 Flash', 'GPT-4.1 Nano', 'GLM-4-32B', 'GLM-4-9B', 'Claude 3.5 Sonnet',
+        'Llama 3.3', 'Qwen2.5-72B', 'Qwen2.5-7B', 'Llama 4', 'DeepSeek-R1 7B', 'Mistral-8x7B'
+    ];
+    const level3Scores = [7.00, 6.45, 6.38, 6.33, 6.21, 5.99, 5.74, 5.65, 5.17, 5.05, 5.01, 4.72, 4.62, 3.86, 3.81, 3.48];
+    const humanScore = 8.58;
+
+    new Chart(level3ScoreCtx, {
+        type: 'bar',
+        data: {
+            labels: level3Models,
+            datasets: [
+                {
+                    label: 'Level 3',
+                    data: level3Scores,
+                    backgroundColor: softGreen,
+                    borderColor: softGreenBorder,
+                    borderWidth: 1
+                },
+                {
+                    label: `Human Score (${humanScore})`,
+                    data: new Array(level3Models.length).fill(humanScore),
+                    type: 'line',
+                    borderColor: '#e74c3c',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: false,
+                    pointRadius: 0,
+                    pointHoverRadius: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Level 3 Score'
+                },
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    max: 10,
+                    title: { display: true, text: 'Score' }
+                },
+                x: { 
+                    ticks: { 
+                        maxRotation: 45,
+                        font: { size: 9 }
+                    }
+                }
+            }
+        }
+    });
+
+
 
     // Data for charts
     const weightedScores = {

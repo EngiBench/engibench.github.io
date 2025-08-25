@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60">
+  <rect width="200" height="60" fill="white"/>
+  <text x="100" y="20" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#722F37">CUHK</text>
+  <text x="100" y="35" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#722F37">SHENZHEN</text>
+  <text x="100" y="50" font-family="Arial, sans-serif" font-size="8" text-anchor="middle" fill="#B8860B">香港中文大学（深圳）</text>
+</svg> 

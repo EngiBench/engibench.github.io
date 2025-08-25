@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="static/css/index.css">
   <link rel="stylesheet" href="static/css/example.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 </head>
 <body>
@@ -70,18 +71,23 @@
 
           <div class="org-logos">
             <div class="org-logo">
+              <a href="https://www.ntu.edu.sg/" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/ntu_logo.svg" alt="NTU Singapore">
+              </a>
+            </div>
+            <div class="org-logo">
+              <a href="https://cuhk.edu.cn/" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/CUHKSZ.jpeg" alt="CUHK-Shenzhen">
+              </a>
+            </div>
+            <div class="org-logo">
               <a href="https://insait.ai/" target="_blank" rel="noopener noreferrer">
                 <img src="static/images/insait_logo.png" alt="INSAIT">
               </a>
             </div>
             <div class="org-logo">
-              <a href="https://www.sri.inf.ethz.ch/" target="_blank" rel="noopener noreferrer">
-                <img src="static/images/sri-logo.svg" alt="SRI Lab">
-              </a>
-            </div>
-            <div class="org-logo">
-              <a href="https://ethz.ch/en.html" target="_blank" rel="noopener noreferrer">
-                <img src="static/images/ETH_Zürich.svg" alt="ETH Zurich">
+              <a href="https://www.sydney.edu.au/" target="_blank" rel="noopener noreferrer">
+                <img src="static/images/USYD.jpeg" alt="University of Sydney">
               </a>
             </div>
           </div>
@@ -108,70 +114,152 @@
 
       <section class="grey-bg">
         <div class="content-container">
-          <h2>Key Finding: Engineering Problem Solving Requires Diverse Skills</h2>
-          <p>Our evaluation reveals that engineering problem solving requires LLMs to demonstrate multiple capabilities including mathematical reasoning, domain-specific knowledge, and practical application skills across various engineering disciplines.</p>
-          <p style="text-align: center; font-size: 0.9em; color: #666;">
-            Table 1: Performance of LLMs on EngiBench across different engineering domains.
-          </p>
-          <table class="table-responsive">
-            <thead>
-              <tr>
-                <th>Model</th>
-                <th>Chemical & Biology</th>
-                <th>Physical & Structural</th>
-                <th class="cost-column">Ocean Engineering</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>GPT-4o</td>
-                <td>78.2</td>
-                <td>82.1</td>
-                <td class="cost-column">75.3</td>
-              </tr>
-              <tr>
-                <td>Claude-3.5-Sonnet</td>
-                <td>76.8</td>
-                <td>79.4</td>
-                <td class="cost-column">73.1</td>
-              </tr>
-              <tr>
-                <td>Gemini-1.5-Pro</td>
-                <td>74.3</td>
-                <td>77.9</td>
-                <td class="cost-column">71.6</td>
-              </tr>
-              <tr>
-                <td>Qwen2.5-72B</td>
-                <td>71.9</td>
-                <td>75.2</td>
-                <td class="cost-column">68.4</td>
-              </tr>
-              <tr>
-                <td>Llama-3.1-70B</td>
-                <td>69.5</td>
-                <td>72.8</td>
-                <td class="cost-column">65.2</td>
-              </tr>
-              <tr>
-                <td>Mistral-Large</td>
-                <td>67.1</td>
-                <td>70.3</td>
-                <td class="cost-column">62.8</td>
-              </tr>
-              <tr>
-                <td>Llama-3.1-8B</td>
-                <td>58.3</td>
-                <td>61.7</td>
-                <td class="cost-column">54.9</td>
-              </tr>
-            </tbody>
-          </table>
+          <h2>Key Findings</h2>
+          <p>Our comprehensive evaluation of LLMs on EngiBench reveals critical insights about their engineering problem-solving capabilities across different complexity levels.</p>
+          
+          <div class="charts-row">
+            <div class="chart-container">
+              <canvas id="levelAccuracyChart"></canvas>
+            </div>
+            <div class="chart-container">
+              <canvas id="level3ScoreChart"></canvas>
+            </div>
+          </div>
+          
+          <div class="key-findings-section">
+            <ul class="findings-list">
+              <li><strong>Model Stratification and Design Validation:</strong> Performance shows a clear downward trend from Level 1 to Level 3, demonstrating the effectiveness of the hierarchical difficulty design.</li>
+              
+              <li><strong>Evaluating High-Level Engineering Reasoning:</strong> At Level 3, models struggle with open-ended and underspecified tasks and score well below human experts (8.58), underscoring current limitations in high-level reasoning.</li>
+              
+              <li><strong>Smaller-Scale LLMs Struggle with Complex Tasks:</strong> As task complexity increases, performance disparities widen—small models fall below 40% on Level 2 and under 4.0 on Level 3, while top models exceed 80% accuracy on Level 2.</li>
+              
+              <li><strong>Robustness and Contamination Risk:</strong> Perturbed variants cause sharp accuracy drops (e.g., −9.3%, −11.4%, −8.3%), revealing reliance on superficial pattern matching rather than robust reasoning.</li>
+            </ul>
+          </div>
           
         </div>
       </section>
 
       <section class="white-bg">
+        <div class="content-container">
+          <h2>Benchmark Design</h2>
+          <p>EngiBench employs a systematic three-level hierarchical design to comprehensively evaluate engineering problem-solving capabilities. Each level targets specific cognitive skills, from foundational knowledge retrieval to complex open-ended modeling, while four core capability dimensions ensure thorough assessment across diverse engineering scenarios.</p>
+          
+          <div class="stats-cards-container">
+            <div class="stat-card">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Difficulty Levels</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">4</div>
+              <div class="stat-label">Capability Dimensions</div>
+            </div>
+          </div>
+
+          <h3>Three-Level Hierarchical Structure</h3>
+          <div class="design-levels">
+            <div class="level-card level-1">
+              <div class="level-header">
+                <div class="level-number">1</div>
+                <h4>Foundational Knowledge Retrieval</h4>
+              </div>
+              <p>Apply <strong>basic</strong> engineering concepts or formulas to structured problems via <strong>single-step</strong> computation.</p>
+              <div class="level-example-toggle" onclick="toggleExample('example1')">
+                <strong>📖 Show Example</strong> <span class="toggle-arrow">▼</span>
+              </div>
+              <div class="level-example" id="example1" style="display: none;">
+                <strong>Example:</strong> A drone operates at a constant power of 200W for 30 minutes. Calculate the total energy consumption in joules.
+                <br><em>👉 This task requires applying the basic physical formula E = P × t, with unit conversion from minutes to seconds. It tests the model's ability to retrieve and apply foundational engineering knowledge in a single-step calculation.</em>
+              </div>
+            </div>
+            
+            <div class="level-card level-2">
+              <div class="level-header">
+                <div class="level-number">2</div>
+                <h4>Contextual Reasoning</h4>
+              </div>
+              <p>Perform <strong>multi-step</strong> reasoning under <strong>well-defined constraints</strong> by integrating conditions and domain knowledge.</p>
+              <div class="level-example-toggle" onclick="toggleExample('example2')">
+                <strong>📖 Show Example</strong> <span class="toggle-arrow">▼</span>
+              </div>
+              <div class="level-example" id="example2" style="display: none;">
+                <strong>Example:</strong> A drone needs to fly 6 km. The first half is uphill, increasing power usage by 20%, while the second half is flat at 150W. The drone flies at 30 km/h and uses a battery rated at 8000mAh, 11.1V. Can the battery support the trip?
+                <br><em>👉 This task requires multi-step reasoning: estimating flight time, adjusting power consumption, and comparing with battery capacity.</em>
+              </div>
+            </div>
+            
+            <div class="level-card level-3">
+              <div class="level-header">
+                <div class="level-number">3</div>
+                <h4>Open-ended Modeling</h4>
+              </div>
+              <p>Solve <strong>open-ended</strong>, real-world problems through information extraction, trade-off reasoning, and uncertainty handling.</p>
+              <div class="level-example-toggle" onclick="toggleExample('example3')">
+                <strong>📖 Show Example</strong> <span class="toggle-arrow">▼</span>
+              </div>
+              <div class="level-example" id="example3" style="display: none;">
+                <strong>Example:</strong> Design a drone system for urban delivery that balances multiple factors, including flight range, payload capacity, and cost control. Propose a feasible solution and justify your design decisions.
+                <br><em>👉 This is an open-ended problem with incomplete constraints and potentially conflicting objectives, requiring information extraction, trade-off analysis, and robustness under uncertainty.</em>
+              </div>
+            </div>
+          </div>
+
+          <h3>Four Core Capability Dimensions</h3>
+          <div class="capability-grid">
+            <div class="capability-card">
+              <div class="capability-icon">🔍</div>
+              <h4>Information Extraction</h4>
+              <p>Identify and extract relevant information from <strong>complex</strong> or <strong>redundant</strong> problem descriptions.</p>
+              <div class="capability-example-toggle" onclick="toggleExample('capability1')">
+                <strong>📖 Show Example</strong> <span class="toggle-arrow">▼</span>
+              </div>
+              <div class="capability-example" id="capability1" style="display: none;">
+                <strong>Example:</strong> Identify critical variables—such as payload weight, wind speed, flight duration, and battery margin—from complex or verbose task descriptions.
+              </div>
+            </div>
+            
+            <div class="capability-card">
+              <div class="capability-icon">⚙️</div>
+              <h4>Domain-specific Reasoning</h4>
+              <p>Apply <strong>specialized engineering principles</strong> and <strong>structured knowledge</strong> to guide inference and solution formulation.</p>
+              <div class="capability-example-toggle" onclick="toggleExample('capability2')">
+                <strong>📖 Show Example</strong> <span class="toggle-arrow">▼</span>
+              </div>
+              <div class="capability-example" id="capability2" style="display: none;">
+                <strong>Example:</strong> Apply specialized engineering knowledge—such as flight mechanics and battery discharge principles—to formulate models and perform technical analysis.
+              </div>
+            </div>
+            
+            <div class="capability-card">
+              <div class="capability-icon">⚖️</div>
+              <h4>Multi-objective Decision Making</h4>
+              <p>Make justified <strong>trade-offs</strong> between competing objectives in the absence of a single optimal solution.</p>
+              <div class="capability-example-toggle" onclick="toggleExample('capability3')">
+                <strong>📖 Show Example</strong> <span class="toggle-arrow">▼</span>
+              </div>
+              <div class="capability-example" id="capability3" style="display: none;">
+                <strong>Example:</strong> Justify trade-offs among competing objectives like range, cost, safety, and operational efficiency when no single optimal solution exists.
+              </div>
+            </div>
+            
+            <div class="capability-card">
+              <div class="capability-icon">🎯</div>
+              <h4>Uncertainty Handling</h4>
+              <p>Ensure solution <strong>robustness</strong> by reasoning under incomplete, variable, or ambiguous real-world conditions.</p>
+              <div class="capability-example-toggle" onclick="toggleExample('capability4')">
+                <strong>📖 Show Example</strong> <span class="toggle-arrow">▼</span>
+              </div>
+              <div class="capability-example" id="capability4" style="display: none;">
+                <strong>Example:</strong> Account for unpredictable factors such as weather, task variation, and battery aging, and design robust strategies (e.g., adding 20% battery reserve) to ensure reliable performance.
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="grey-bg">
         <div class="content-container">
           <h2>Dataset Statistics</h2>
           <p>EngiBench consists of comprehensive engineering problems spanning multiple disciplines including mechanical, electrical, chemical, civil, and computer engineering. The benchmark provides diverse problem types with varying difficulty levels to thoroughly evaluate LLM capabilities.</p>
@@ -221,7 +309,7 @@
         </div>
     </section>
 
-    <section class="grey-bg">
+    <section class="white-bg">
       <div class="content-container">
         <h2>Conclusions and Insights</h2>
         <p>Based on our comprehensive evaluation using EngiBench, we draw key conclusions regarding the current capabilities and limitations of LLMs in engineering problem solving.</p>
