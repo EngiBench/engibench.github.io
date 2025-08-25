@@ -164,7 +164,7 @@
                 <div class="level-number">1</div>
                 <h4>Foundational Knowledge Retrieval</h4>
               </div>
-              <p>Apply <strong>basic</strong> engineering concepts or formulas to structured problems via <strong>single-step</strong> computation.</p>
+              <p>Apply <strong>basic</strong> engineering concepts or standard formulas to structured problems via <strong>single-step</strong> computation.</p>
               <div class="level-example-toggle" onclick="toggleExample('example1')">
                 <strong>📖 Show Example</strong> <span class="toggle-arrow">▼</span>
               </div>
@@ -260,6 +260,91 @@
       </section>
 
       <section class="grey-bg">
+        <div class="content-container">
+          <h2>Dataset Construction</h2>
+          <p>EngiBench is systematically constructed through diverse data sources and problem variants to ensure comprehensive evaluation of engineering problem-solving capabilities across different contexts and complexity levels.</p>
+          
+          <div class="stats-cards-container">
+            <div class="stat-card">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Data Sources</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">4</div>
+              <div class="stat-label">Problem Variants</div>
+            </div>
+          </div>
+
+          <h3>Data Sources</h3>
+          <p>EngiBench collects problems from three main sources to capture the diversity of real-world engineering challenges.</p>
+          
+          <div class="data-sources">
+            <div class="source-card">
+              <div class="source-icon">📘</div>
+              <h4>Public Benchmarks</h4>
+              <p>Tasks adapted from MMLU, GSM8k, MATH, Omni-MATH, Big-Math, Orca-Math, HARP, AMC-AIME, etc.</p>
+            </div>
+            
+            <div class="source-card">
+              <div class="source-icon">🏫</div>
+              <h4>University Resources</h4>
+              <p>Authorized teaching materials and structured engineering exercises.</p>
+            </div>
+            
+            <div class="source-card">
+              <div class="source-icon">🏆</div>
+              <h4>Modeling Competitions</h4>
+              <p>43 open-ended problems from competitions (2010–2024), evaluated using expert-designed rubrics.</p>
+            </div>
+          </div>
+
+          <h3>Problem Variants</h3>
+          <p>Each problem is systematically rewritten to enable fine-grained capability analysis:</p>
+          
+          <div class="problem-variants-container">
+            <div class="variants-image">
+              <img src="static/images/problem-variants.png" alt="Problem Variants Illustration" style="width: 100%; max-width: 800px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+            </div>
+            
+            <div class="variants-grid">
+              <div class="variant-card">
+                <div class="variant-header">
+                  <div class="variant-color original"></div>
+                  <h4>Original</h4>
+                </div>
+                <p>The unmodified engineering problem.</p>
+              </div>
+              
+              <div class="variant-card">
+                <div class="variant-header">
+                  <div class="variant-color perturbed"></div>
+                  <h4>Perturbed</h4>
+                </div>
+                <p>Numerical and semantic changes to test robustness and avoid data overlap.</p>
+              </div>
+              
+              <div class="variant-card">
+                <div class="variant-header">
+                  <div class="variant-color knowledge"></div>
+                  <h4>Knowledge-enhanced</h4>
+                </div>
+                <p>Adds explicit formulas, constants, or definitions to check whether errors stem from missing knowledge.</p>
+              </div>
+              
+              <div class="variant-card">
+                <div class="variant-header">
+                  <div class="variant-color abstraction"></div>
+                  <h4>Math Abstraction</h4>
+                </div>
+                <p>Removes engineering context, reducing the problem to pure symbolic computation to test mathematical reasoning.</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="white-bg">
         <div class="content-container">
           <h2>Dataset Statistics</h2>
           <p>EngiBench consists of comprehensive engineering problems spanning multiple disciplines including mechanical, electrical, chemical, civil, and computer engineering. The benchmark provides diverse problem types with varying difficulty levels to thoroughly evaluate LLM capabilities.</p>
