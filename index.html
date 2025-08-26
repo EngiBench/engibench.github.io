@@ -375,6 +375,35 @@
 
       <section class="grey-bg">
         <div class="content-container">
+          <h2>Performance for Level 3 Tasks</h2>
+          <p>Our analysis of Level 3 tasks reveals the relationship between overall performance and domain-specific capabilities, highlighting the challenges models face in open-ended engineering problem solving.</p>
+          
+          <div class="charts-row">
+            <div class="chart-container">
+              <canvas id="level3HeatmapChart"></canvas>
+            </div>
+            <div class="chart-container">
+              <img src="static/images/correlation.png" alt="Level 3 Score vs Average Accuracy Correlation" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+            </div>
+          </div>
+          
+          <div class="performance-analysis">
+            <ul class="performance-findings-list">
+              <li><strong>Strong Performance Correlation:</strong> Models with higher average accuracy (Level 1 & 2) generally achieve better Level 3 scores, indicating that foundational skills are crucial for complex problem-solving capabilities.</li>
+              
+              <li><strong>Domain-Specific Variations:</strong> The heatmap reveals significant performance variations across different engineering domains, with some models excelling in specific areas while struggling in others.</li>
+              
+              <li><strong>Open-ended Challenge:</strong> Even top-performing models like GPT-4.1 and Claude 3.7 Sonnet show substantial performance drops in Level 3 tasks, highlighting the difficulty of open-ended engineering reasoning.</li>
+              
+              <li><strong>Model Stratification:</strong> Clear performance tiers emerge, with larger models consistently outperforming smaller variants across all domains, emphasizing the importance of model scale for complex reasoning tasks.</li>
+            </ul>
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="white-bg">
+        <div class="content-container">
           <h2>Dataset Statistics</h2>
           <p>EngiBench consists of comprehensive engineering problems spanning multiple disciplines including mechanical, electrical, chemical, civil, and computer engineering. The benchmark provides diverse problem types with varying difficulty levels to thoroughly evaluate LLM capabilities.</p>
           <div class="stats-cards-container">

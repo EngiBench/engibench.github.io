@@ -937,4 +937,132 @@ function renderProblems(problems, containerId) {
             }
         }
     }
+
+    // --- NEW: Performance Charts for Level 3 Tasks ---
+    // Level 3 Heatmap Chart (Heatmap-style visualization)
+    const level3HeatmapElement = document.getElementById('level3HeatmapChart');
+    if (!level3HeatmapElement) {
+        console.error('level3HeatmapChart element not found');
+        return;
+    }
+    const level3HeatmapCtx = level3HeatmapElement.getContext('2d');
+    
+    // Heatmap data from the original image - models and domains
+    const heatmapModels = [
+        'Human Expert', 'GPT-4.1', 'Claude 3.7 Sonnet', 'GPT-4.1 Mini', 'DeepSeek-V3',
+        'Gemini 2.5 Flash', 'Gemini 2.0 Flash', 'GPT-4.1 Nano', 'GLM-4-32B', 'GLM-4-9B',
+        'Claude 3.5 Sonnet', 'Llama 3.3', 'Qwen2.5-72B', 'Qwen2.5-7B', 'Llama 4',
+        'DeepSeek-R1 7B', 'Mixtral-8x7B'
+    ];
+    
+    const domains = [
+        'Redundant Info (Original)', 'Redundant Info (Rewritten)', 'Multi-objective (Original)', 
+        'Multi-objective (Rewritten)', 'Knowledge (Original)', 'Knowledge (Rewritten)', 
+        'Uncertainty (Original)', 'Uncertainty (Rewritten)', 'Average (Original)', 'Average (Rewritten)'
+    ];
+    
+    // Create heatmap data matrix (simplified version for visualization)
+    const heatmapData = [
+        [9.134, 9.064, 8.295, 8.370, 8.701, 8.590, 8.782, 8.921, 8.552, 8.736], // Human Expert
+        [8.334, 8.365, 7.419, 7.290, 6.598, 6.437, 6.081, 5.916, 7.108, 7.002], // GPT-4.1
+        [8.349, 8.185, 6.096, 6.716, 6.229, 5.529, 5.951, 5.351, 6.656, 6.445], // Claude 3.7 Sonnet
+        [7.793, 7.528, 6.880, 6.203, 6.179, 5.984, 6.322, 5.798, 6.793, 6.378], // GPT-4.1 Mini
+        [7.561, 7.570, 6.375, 6.521, 5.850, 5.862, 5.369, 5.361, 6.289, 6.329], // DeepSeek-V3
+        [8.320, 7.652, 6.434, 6.263, 4.746, 5.533, 5.287, 5.383, 6.197, 6.208], // Gemini 2.5 Flash
+        [6.878, 7.015, 6.188, 6.067, 6.145, 5.892, 5.370, 4.990, 6.145, 5.991], // Gemini 2.0 Flash
+        [7.118, 6.536, 6.080, 6.154, 5.236, 5.206, 5.438, 5.058, 5.968, 5.738], // GPT-4.1 Nano
+        [6.937, 6.583, 5.902, 5.579, 4.512, 5.715, 5.110, 4.733, 5.615, 5.653], // GLM-4-32B
+        [5.796, 5.959, 4.813, 5.399, 4.397, 4.734, 4.328, 4.586, 4.833, 5.169], // GLM-4-9B
+        [6.444, 6.271, 5.774, 5.190, 4.173, 4.531, 4.520, 4.204, 5.228, 5.049], // Claude 3.5 Sonnet
+        [5.840, 5.995, 4.965, 5.072, 4.385, 4.673, 4.157, 4.290, 4.837, 5.008], // Llama 3.3
+        [6.075, 5.696, 4.896, 4.819, 4.479, 4.313, 4.289, 4.061, 4.935, 4.722], // Qwen2.5-72B
+        [5.094, 5.541, 4.688, 4.731, 3.934, 4.218, 3.641, 3.988, 4.339, 4.619], // Qwen2.5-7B
+        [5.562, 5.753, 3.076, 3.311, 3.519, 3.081, 2.912, 3.299, 3.767, 3.861], // Llama 4
+        [5.051, 5.168, 4.015, 3.541, 3.254, 3.621, 3.853, 2.910, 4.043, 3.810], // DeepSeek-R1 7B
+        [3.678, 4.443, 3.504, 3.319, 3.318, 3.248, 2.311, 2.893, 3.203, 3.476]  // Mixtral-8x7B
+    ];
+
+    // Create a horizontal bar chart that mimics a heatmap
+    const datasets = domains.map((domain, domainIndex) => ({
+        label: domain,
+        data: heatmapModels.map((model, modelIndex) => heatmapData[modelIndex][domainIndex]),
+        backgroundColor: heatmapModels.map((model, modelIndex) => {
+            const value = heatmapData[modelIndex][domainIndex];
+            // Green color gradient based on value (3-9 range)
+            const intensity = (value - 3) / (9 - 3);
+            const greenValue = Math.floor(50 + intensity * 150); // 50-200 range for green
+            return `rgba(0, ${greenValue}, 0, 0.8)`;
+        }),
+        borderColor: 'rgba(255, 255, 255, 0.2)',
+        borderWidth: 1
+    }));
+
+    new Chart(level3HeatmapCtx, {
+        type: 'bar',
+        data: {
+            labels: heatmapModels,
+            datasets: [{
+                label: 'Average Score',
+                data: heatmapModels.map((model, index) => {
+                    // Calculate average across all domains for each model
+                    return heatmapData[index].reduce((a, b) => a + b, 0) / heatmapData[index].length;
+                }),
+                backgroundColor: heatmapModels.map((model, index) => {
+                    const avgValue = heatmapData[index].reduce((a, b) => a + b, 0) / heatmapData[index].length;
+                    // Green gradient based on average value
+                    const intensity = (avgValue - 3) / (9 - 3);
+                    const greenValue = Math.floor(50 + intensity * 150);
+                    return `rgba(0, ${greenValue}, 0, 0.8)`;
+                }),
+                borderColor: 'rgba(255, 255, 255, 0.2)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y', // Make it horizontal to look more like a heatmap
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Level 3 Performance Heatmap (Average Scores)',
+                    font: { size: 14 }
+                },
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.parsed.x.toFixed(2)}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: false,
+                    min: 3,
+                    max: 9,
+                    title: {
+                        display: true,
+                        text: 'Average Score',
+                        font: { size: 12 }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
+                y: {
+                    ticks: {
+                        font: { size: 9 }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        }
+    });
+
 }
