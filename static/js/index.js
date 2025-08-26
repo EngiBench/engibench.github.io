@@ -946,228 +946,118 @@ function renderProblems(problems, containerId) {
         return;
     }
     
-    // Create HTML table instead of chart for true heatmap visualization
+    // Create HTML table instead of chart for true heatmap visualization (transposed layout)
     const heatmapContainer = level3HeatmapElement.parentElement;
     heatmapContainer.innerHTML = `
         <div style="
+            width: 100%;
             overflow-x: auto; 
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
-            border-radius: 12px; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12); 
+            background: white; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); 
             padding: 24px;
+            margin: 0;
             position: relative;
         ">
-            <div style="
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 4px;
-                background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-                border-radius: 12px 12px 0 0;
-            "></div>
-            
-            <h3 style="
-                text-align: center; 
-                margin: 0 0 24px 0; 
-                color: #2d3748; 
-                font-size: 18px; 
-                font-weight: 600;
-                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            ">Level 3 Performance Heatmap</h3>
-            
-            <div style="
-                background: white;
-                border-radius: 8px;
-                overflow: hidden;
-                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            ">
-                <table id="heatmapTable" style="
-                    width: 100%; 
-                    border-collapse: collapse; 
-                    font-size: 11px; 
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    margin: 0;
+            <div style="position: relative; z-index: 1;">
+                <h3 style="
+                    text-align: center; 
+                    margin: 0 0 20px 0; 
+                    color: #2d3748; 
+                    font-size: 24px; 
+                    font-weight: 700;
+                    letter-spacing: -0.5px;
+                ">Level 3 Performance Heatmap</h3>
+                
+                <div style="
+                    background: white;
+                    border-radius: 12px;
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+                    border: 2px solid rgba(255, 255, 255, 0.2);
+                    max-width: 100%;
+                    position: relative;
                 ">
-                    <thead>
-                        <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <th style="
-                                padding: 16px 12px; 
-                                text-align: left; 
-                                border: none;
-                                font-weight: 600; 
-                                min-width: 140px;
-                                color: white;
-                                font-size: 12px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                            "></th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Redundant Info<br/>(Original)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Redundant Info<br/>(Rewritten)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Multi-objective<br/>(Original)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Multi-objective<br/>(Rewritten)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Knowledge<br/>(Original)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Knowledge<br/>(Rewritten)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Uncertainty<br/>(Original)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Uncertainty<br/>(Rewritten)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Average<br/>(Original)</th>
-                            <th style="
-                                padding: 16px 8px; 
-                                text-align: center; 
-                                border: none;
-                                font-weight: 600; 
-                                writing-mode: vertical-rl; 
-                                text-orientation: mixed;
-                                color: white;
-                                font-size: 10px;
-                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-                                min-width: 60px;
-                            ">Average<br/>(Rewritten)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="heatmapTableBody">
-                    </tbody>
-                </table>
-            </div>
-            
-            <div style="
-                margin-top: 20px; 
-                display: flex; 
-                align-items: center; 
-                justify-content: center; 
-                gap: 15px;
-                background: rgba(255, 255, 255, 0.9);
-                padding: 12px 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            ">
-                <span style="font-size: 13px; color: #4a5568; font-weight: 600;">Score Scale:</span>
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <div style="width: 24px; height: 16px; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 3px;"></div>
-                        <span style="font-size: 11px; color: #718096; font-weight: 500;">2.0</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <div style="width: 24px; height: 16px; background: #c6f6d5; border-radius: 3px;"></div>
-                        <span style="font-size: 11px; color: #718096; font-weight: 500;">4.0</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <div style="width: 24px; height: 16px; background: #68d391; border-radius: 3px;"></div>
-                        <span style="font-size: 11px; color: #718096; font-weight: 500;">6.0</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <div style="width: 24px; height: 16px; background: #38a169; border-radius: 3px;"></div>
-                        <span style="font-size: 11px; color: #718096; font-weight: 500;">8.0</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <div style="width: 24px; height: 16px; background: #2f855a; border-radius: 3px;"></div>
-                        <span style="font-size: 11px; color: #718096; font-weight: 500;">9.0+</span>
+                    <table id="heatmapTable" style="
+                        width: calc(180px + 17 * 70px); 
+                        border-collapse: collapse; 
+                        font-size: 10px; 
+                        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+                        margin: 0;
+                        background: white;
+                        table-layout: fixed;
+                        min-width: 1370px;
+                    ">
+                        <thead>
+                            <tr style="background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);">
+                                <th style="
+                                    padding: 12px 16px; 
+                                    text-align: left; 
+                                    border-right: 2px solid rgba(255, 255, 255, 0.1);
+                                    font-weight: 700; 
+                                    width: 180px;
+                                    color: white;
+                                    font-size: 11px;
+                                    position: sticky;
+                                    left: 0;
+                                    z-index: 20;
+                                    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+                                    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+                                    box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+                                ">Domain</th>
+                            </tr>
+                        </thead>
+                        <tbody id="heatmapTableBody">
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="
+                    margin-top: 20px;
+                    background: #f8fafc;
+                    border-radius: 12px;
+                    padding: 16px 24px;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                    border: 1px solid #e2e8f0;
+                ">
+                    <div style="
+                        display: flex; 
+                        align-items: center; 
+                        justify-content: center; 
+                        gap: 24px;
+                        flex-wrap: wrap;
+                    ">
+                        <span style="font-size: 14px; color: #2d3748; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">Score Scale:</span>
+                        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 24px; height: 16px; background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+                                <span style="font-size: 11px; color: #4a5568; font-weight: 600;">≤3.0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 24px; height: 16px; background: #c6f6d5; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+                                <span style="font-size: 11px; color: #4a5568; font-weight: 600;">4.0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 24px; height: 16px; background: #68d391; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+                                <span style="font-size: 11px; color: #4a5568; font-weight: 600;">6.0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 24px; height: 16px; background: #38a169; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+                                <span style="font-size: 11px; color: #4a5568; font-weight: 600;">8.0</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 24px; height: 16px; background: #2f855a; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+                                <span style="font-size: 11px; color: #4a5568; font-weight: 600;">≥9.0</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     `;
     
-    // Heatmap data from the original image - models and domains
+    // Transposed heatmap data - domains and models (横向布局，包含所有模型)
     const heatmapModels = [
         'Human Expert', 'GPT-4.1', 'Claude 3.7 Sonnet', 'GPT-4.1 Mini', 'DeepSeek-V3',
         'Gemini 2.5 Flash', 'Gemini 2.0 Flash', 'GPT-4.1 Nano', 'GLM-4-32B', 'GLM-4-9B',
@@ -1175,8 +1065,21 @@ function renderProblems(problems, containerId) {
         'DeepSeek-R1 7B', 'Mixtral-8x7B'
     ];
     
-    // Create heatmap data matrix
-    const heatmapData = [
+    const heatmapDomains = [
+        'Redundant Info (Original)',
+        'Redundant Info (Rewritten)', 
+        'Multi-objective (Original)',
+        'Multi-objective (Rewritten)',
+        'Knowledge (Original)',
+        'Knowledge (Rewritten)',
+        'Uncertainty (Original)', 
+        'Uncertainty (Rewritten)',
+        'Average (Original)',
+        'Average (Rewritten)'
+    ];
+    
+    // Original data matrix (models x domains) - 包含所有17个模型
+    const originalData = [
         [9.134, 9.064, 8.295, 8.370, 8.701, 8.590, 8.782, 8.921, 8.552, 8.736], // Human Expert
         [8.334, 8.365, 7.419, 7.290, 6.598, 6.437, 6.081, 5.916, 7.108, 7.002], // GPT-4.1
         [8.349, 8.185, 6.096, 6.716, 6.229, 5.529, 5.951, 5.351, 6.656, 6.445], // Claude 3.7 Sonnet
@@ -1195,6 +1098,11 @@ function renderProblems(problems, containerId) {
         [5.051, 5.168, 4.015, 3.541, 3.254, 3.621, 3.853, 2.910, 4.043, 3.810], // DeepSeek-R1 7B
         [3.678, 4.443, 3.504, 3.319, 3.318, 3.248, 2.311, 2.893, 3.203, 3.476]  // Mixtral-8x7B
     ];
+    
+    // Transpose the data matrix (domains x models)
+    const heatmapData = heatmapDomains.map((domain, domainIndex) =>
+        heatmapModels.map((model, modelIndex) => originalData[modelIndex][domainIndex])
+    );
 
     // Function to get color based on value with improved gradient
     function getHeatmapColor(value) {
@@ -1222,81 +1130,106 @@ function renderProblems(problems, containerId) {
         return value > 6.5 ? 'white' : '#2d3748';
     }
 
-    // Populate the table
+    // Add model names as column headers dynamically
+    const thead = document.querySelector('#heatmapTable thead tr');
+    heatmapModels.forEach((model, index) => {
+        const th = document.createElement('th');
+        th.textContent = model;
+        th.style.cssText = `
+            padding: 8px 4px; 
+            text-align: center; 
+            ${index < heatmapModels.length - 1 ? 'border-right: 1px solid rgba(255, 255, 255, 0.1);' : ''}
+            font-weight: 600; 
+            color: white;
+            font-size: 8px;
+            width: 70px;
+            max-width: 70px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            line-height: 1.1;
+            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        `;
+        thead.appendChild(th);
+    });
+    
+    // Populate the table with transposed data
     const tbody = document.getElementById('heatmapTableBody');
-    heatmapModels.forEach((model, modelIndex) => {
+    heatmapDomains.forEach((domain, domainIndex) => {
         const row = document.createElement('tr');
         row.style.cssText = `
-            transition: all 0.2s ease;
-            ${modelIndex % 2 === 0 ? 'background: rgba(247, 250, 252, 0.5);' : ''}
+            ${domainIndex % 2 === 0 ? 'background: rgba(248, 250, 252, 0.5);' : 'background: white;'}
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.3);
         `;
         
-        // Add hover effect
+        // Add sophisticated hover effect
         row.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.01)';
-            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
-            this.style.zIndex = '10';
-            this.style.position = 'relative';
+            this.style.backgroundColor = 'rgba(102, 126, 234, 0.05)';
+            this.style.transform = 'translateY(-1px)';
+            this.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.15)';
         });
         
         row.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
+            this.style.backgroundColor = domainIndex % 2 === 0 ? 'rgba(248, 250, 252, 0.5)' : 'white';
+            this.style.transform = 'translateY(0)';
             this.style.boxShadow = 'none';
-            this.style.zIndex = 'auto';
-            this.style.position = 'static';
         });
         
-        // Model name cell
-        const modelCell = document.createElement('td');
-        modelCell.textContent = model;
-        modelCell.style.cssText = `
-            padding: 12px; 
+        // Domain name cell (first column)
+        const domainCell = document.createElement('td');
+        domainCell.textContent = domain;
+        domainCell.style.cssText = `
+            padding: 10px 16px; 
             text-align: left; 
-            border: none;
-            border-bottom: 1px solid #e2e8f0;
-            font-weight: 600; 
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-right: 2px solid rgba(226, 232, 240, 0.3);
+            font-weight: 700; 
+            background: ${domainIndex % 2 === 0 ? 'rgba(248, 250, 252, 1)' : 'white'};
             color: #2d3748;
-            font-size: 11px;
+            font-size: 10px;
             position: sticky;
             left: 0;
-            z-index: 5;
+            z-index: 15;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            width: 180px;
+            box-shadow: 2px 0 4px rgba(0,0,0,0.05);
         `;
-        row.appendChild(modelCell);
+        row.appendChild(domainCell);
         
-        // Data cells
-        heatmapData[modelIndex].forEach((value, valueIndex) => {
+        // Data cells (one for each model)
+        heatmapData[domainIndex].forEach((value, modelIndex) => {
             const cell = document.createElement('td');
-            cell.textContent = value.toFixed(3);
+            cell.textContent = value.toFixed(2);
             const bgColor = getHeatmapColor(value);
             const textColor = getTextColor(value);
             
             cell.style.cssText = `
-                padding: 12px 8px; 
+                padding: 8px 4px; 
                 text-align: center; 
-                border: none;
-                border-bottom: 1px solid rgba(226, 232, 240, 0.5);
-                border-right: 1px solid rgba(226, 232, 240, 0.3);
+                ${modelIndex < heatmapData[domainIndex].length - 1 ? 'border-right: 1px solid rgba(226, 232, 240, 0.2);' : ''}
                 background: ${bgColor}; 
                 color: ${textColor};
-                font-weight: 600;
-                font-size: 11px;
-                transition: all 0.2s ease;
+                font-weight: 700;
+                font-size: 9px;
                 position: relative;
+                text-shadow: ${value > 6.5 ? '0 1px 2px rgba(0,0,0,0.3)' : '0 1px 2px rgba(0,0,0,0.05)'};
+                transition: all 0.2s ease;
+                width: 70px;
+                max-width: 70px;
             `;
             
-            // Add hover effect for individual cells
+            // Add subtle hover effect for cells
             cell.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.1)';
-                this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.2)';
-                this.style.zIndex = '20';
+                this.style.transform = 'scale(1.05)';
+                this.style.zIndex = '10';
+                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
                 this.style.borderRadius = '4px';
             });
             
             cell.addEventListener('mouseleave', function() {
                 this.style.transform = 'scale(1)';
-                this.style.boxShadow = 'none';
                 this.style.zIndex = 'auto';
+                this.style.boxShadow = 'none';
                 this.style.borderRadius = '0';
             });
             
