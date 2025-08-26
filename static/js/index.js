@@ -235,7 +235,188 @@ $(document).ready(function() {
         }
     });
 
-    // --- NEW: Key Finding Charts ---
+    // --- NEW: Performance Charts for Level 1 & Level 2 ---
+    // Level 1 Accuracy Chart (sorted by perturbed L1)
+    const level1AccuracyElement = document.getElementById('level1AccuracyChart');
+    if (!level1AccuracyElement) {
+        console.error('level1AccuracyChart element not found');
+        return;
+    }
+    const level1AccuracyCtx = level1AccuracyElement.getContext('2d');
+    const level1Models = [
+        'Gemini 2.5 Flash', 'Llama 4', 'GPT-4.1', 'DeepSeek-V3', 'Gemini 2.0 Flash',
+        'GPT-4.1 Nano', 'Claude 3.7 Sonnet', 'GLM-4-32B', 'GPT-4.1 Mini', 'Claude 3.5 Sonnet',
+        'Qwen2.5-72B', 'Llama 3.3', 'GLM-4-9B', 'DeepSeek-R1 7B', 'Qwen2.5-7B', 'Mixtral-8x7B'
+    ];
+    
+    const level1Original = [92.7, 90.1, 90.2, 89.5, 91.0, 81.2, 80.8, 84.6, 84.5, 80.7, 82.7, 83.5, 75.3, 75.7, 73.0, 64.8];
+    const level1Perturbed = [75.1, 90.2, 87.5, 89.5, 86.3, 84.7, 84.1, 83.5, 83.5, 82.1, 77.6, 76.9, 75.8, 75.7, 73.0, 60.3];
+    const level1Knowledge = [92.2, 92.2, 91.9, 90.6, 90.2, 88.9, 85.2, 85.8, 89.7, 82.2, 82.3, 82.4, 81.1, 81.8, 76.8, 69.6];
+    const level1MathAbs = [95.3, 93.9, 95.3, 90.6, 94.5, 91.6, 92.7, 89.8, 90.6, 92.0, 86.0, 85.4, 84.5, 82.6, 84.0, 79.0];
+
+    new Chart(level1AccuracyCtx, {
+        type: 'bar',
+        data: {
+            labels: level1Models,
+            datasets: [
+                {
+                    label: 'Original',
+                    data: level1Original,
+                    backgroundColor: 'rgba(169, 169, 169, 0.7)',
+                    borderColor: 'rgba(169, 169, 169, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Perturbed',
+                    data: level1Perturbed,
+                    backgroundColor: 'rgba(70, 130, 180, 0.7)',
+                    borderColor: 'rgba(70, 130, 180, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Knowledge-enhanced',
+                    data: level1Knowledge,
+                    backgroundColor: 'rgba(135, 206, 235, 0.7)',
+                    borderColor: 'rgba(135, 206, 235, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Math Abstraction',
+                    data: level1MathAbs,
+                    backgroundColor: 'rgba(173, 216, 230, 0.7)',
+                    borderColor: 'rgba(173, 216, 230, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Level 1 Accuracy (sorted by perturbed L1)'
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    align: 'center',
+                    labels: {
+                        boxWidth: 12,
+                        font: { size: 11 },
+                        padding: 12,
+                        usePointStyle: false
+                    },
+                    maxHeight: 40
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    max: 100,
+                    title: { display: true, text: 'Accuracy (%)' }
+                },
+                x: { 
+                    ticks: { 
+                        maxRotation: 45,
+                        font: { size: 9 }
+                    }
+                }
+            }
+        }
+    });
+
+    // Level 2 Accuracy Chart (sorted by perturbed L2)
+    const level2AccuracyElement = document.getElementById('level2AccuracyChart');
+    if (!level2AccuracyElement) {
+        console.error('level2AccuracyChart element not found');
+        return;
+    }
+    const level2AccuracyCtx = level2AccuracyElement.getContext('2d');
+    const level2Models = [
+        'Gemini 2.5 Flash', 'GPT-4.1', 'Llama 4', 'Claude 3.7 Sonnet', 'Gemini 2.0 Flash',
+        'GPT-4.1 Mini', 'DeepSeek-V3', 'GLM-4-32B', 'Claude 3.5 Sonnet', 'GPT-4.1 Nano',
+        'Qwen2.5-72B', 'DeepSeek-R1 7B', 'Llama 3.3', 'GLM-4-9B', 'Qwen2.5-7B', 'Mixtral-8x7B'
+    ];
+    
+    const level2Original = [82.9, 80.0, 76.5, 73.5, 69.6, 69.0, 63.6, 62.0, 64.8, 59.1, 54.4, 52.5, 52.5, 50.5, 37.3, 30.0];
+    const level2Perturbed = [91.7, 81.5, 76.3, 73.0, 75.7, 71.9, 72.0, 63.9, 68.5, 74.5, 55.4, 65.7, 55.3, 61.3, 53.9, 42.9];
+    const level2Knowledge = [94.2, 85.3, 78.9, 77.2, 78.2, 82.5, 82.0, 77.0, 80.3, 83.3, 74.6, 73.0, 73.2, 70.2, 69.4, 57.7];
+    const level2MathAbs = [94.2, 87.8, 89.8, 84.1, 87.4, 82.5, 82.0, 77.0, 80.3, 83.3, 74.6, 73.0, 73.2, 70.2, 69.4, 57.7];
+
+    new Chart(level2AccuracyCtx, {
+        type: 'bar',
+        data: {
+            labels: level2Models,
+            datasets: [
+                {
+                    label: 'Original',
+                    data: level2Original,
+                    backgroundColor: 'rgba(169, 169, 169, 0.7)',
+                    borderColor: 'rgba(169, 169, 169, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Perturbed',
+                    data: level2Perturbed,
+                    backgroundColor: 'rgba(220, 20, 60, 0.7)',
+                    borderColor: 'rgba(220, 20, 60, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Knowledge-enhanced',
+                    data: level2Knowledge,
+                    backgroundColor: 'rgba(255, 182, 193, 0.7)',
+                    borderColor: 'rgba(255, 182, 193, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Math Abstraction',
+                    data: level2MathAbs,
+                    backgroundColor: 'rgba(255, 218, 185, 0.7)',
+                    borderColor: 'rgba(255, 218, 185, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Level 2 Accuracy (sorted by perturbed L2)'
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    align: 'center',
+                    labels: {
+                        boxWidth: 12,
+                        font: { size: 11 },
+                        padding: 12,
+                        usePointStyle: false
+                    },
+                    maxHeight: 40
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    max: 100,
+                    title: { display: true, text: 'Accuracy (%)' }
+                },
+                x: { 
+                    ticks: { 
+                        maxRotation: 45,
+                        font: { size: 9 }
+                    }
+                }
+            }
+        }
+    });
+
+    // --- Key Finding Charts ---
     // Level 1 and Level 2 Accuracy Chart (按照图片中的确切数值和顺序)
     const levelAccuracyCtx = document.getElementById('levelAccuracyChart').getContext('2d');
     const modelNames = [

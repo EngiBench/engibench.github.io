@@ -346,6 +346,35 @@
 
       <section class="white-bg">
         <div class="content-container">
+          <h2>Performance for Level 1 & Level 2 Tasks</h2>
+          <p>Our evaluation reveals significant performance variations across models and problem variants for foundational and contextual reasoning tasks.</p>
+          
+          <div class="charts-row">
+            <div class="chart-container">
+              <canvas id="level1AccuracyChart"></canvas>
+            </div>
+            <div class="chart-container">
+              <canvas id="level2AccuracyChart"></canvas>
+            </div>
+          </div>
+          
+          <div class="performance-analysis">
+            <ul class="performance-findings-list">
+              <li><strong>Knowledge Enhancement Benefits:</strong> Adding explicit domain knowledge significantly improves model accuracy across all levels, especially for weaker models. Models perform consistently better on knowledge-enhanced variants than on perturbed inputs.</li>
+              
+              <li><strong>Math Abstraction Advantage:</strong> LLMs' performance further improves when problems are abstracted into symbolic mathematical form, eliminating engineering context. Most models achieve their highest accuracy under this variant, particularly smaller-scale LLMs that struggle with contextual interpretation.</li>
+              
+              <li><strong>Small Model Instability:</strong> Smaller-scale LLMs exhibit significantly greater performance variation across different input versions, revealing their limited generalization and unstable reasoning processes. For example, Qwen2.5-7B drops by 11.4% under the perturbed version, but gains 16.6% when explicit domain knowledge is added.</li>
+              
+              <li><strong>Large Model Robustness:</strong> Top-performing models like Gemini 2.5 Flash remain largely stable, with only minimal changes relative to their perturbed performance (-1.2%, +2.4%, and +0.1% respectively), highlighting that smaller-scale models are sensitive to input formulation and often rely on surface patterns rather than consistent, context-aware reasoning.</li>
+            </ul>
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="grey-bg">
+        <div class="content-container">
           <h2>Dataset Statistics</h2>
           <p>EngiBench consists of comprehensive engineering problems spanning multiple disciplines including mechanical, electrical, chemical, civil, and computer engineering. The benchmark provides diverse problem types with varying difficulty levels to thoroughly evaluate LLM capabilities.</p>
           <div class="stats-cards-container">
