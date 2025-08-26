@@ -939,13 +939,233 @@ function renderProblems(problems, containerId) {
     }
 
     // --- NEW: Performance Charts for Level 3 Tasks ---
-    // Level 3 Heatmap Chart (Heatmap-style visualization)
+    // Level 3 Heatmap Chart (True heatmap table visualization)
     const level3HeatmapElement = document.getElementById('level3HeatmapChart');
     if (!level3HeatmapElement) {
         console.error('level3HeatmapChart element not found');
         return;
     }
-    const level3HeatmapCtx = level3HeatmapElement.getContext('2d');
+    
+    // Create HTML table instead of chart for true heatmap visualization
+    const heatmapContainer = level3HeatmapElement.parentElement;
+    heatmapContainer.innerHTML = `
+        <div style="
+            overflow-x: auto; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+            border-radius: 12px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12); 
+            padding: 24px;
+            position: relative;
+        ">
+            <div style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+                border-radius: 12px 12px 0 0;
+            "></div>
+            
+            <h3 style="
+                text-align: center; 
+                margin: 0 0 24px 0; 
+                color: #2d3748; 
+                font-size: 18px; 
+                font-weight: 600;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            ">Level 3 Performance Heatmap</h3>
+            
+            <div style="
+                background: white;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            ">
+                <table id="heatmapTable" style="
+                    width: 100%; 
+                    border-collapse: collapse; 
+                    font-size: 11px; 
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    margin: 0;
+                ">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <th style="
+                                padding: 16px 12px; 
+                                text-align: left; 
+                                border: none;
+                                font-weight: 600; 
+                                min-width: 140px;
+                                color: white;
+                                font-size: 12px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                            "></th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Redundant Info<br/>(Original)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Redundant Info<br/>(Rewritten)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Multi-objective<br/>(Original)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Multi-objective<br/>(Rewritten)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Knowledge<br/>(Original)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Knowledge<br/>(Rewritten)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Uncertainty<br/>(Original)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Uncertainty<br/>(Rewritten)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Average<br/>(Original)</th>
+                            <th style="
+                                padding: 16px 8px; 
+                                text-align: center; 
+                                border: none;
+                                font-weight: 600; 
+                                writing-mode: vertical-rl; 
+                                text-orientation: mixed;
+                                color: white;
+                                font-size: 10px;
+                                text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                                min-width: 60px;
+                            ">Average<br/>(Rewritten)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="heatmapTableBody">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="
+                margin-top: 20px; 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                gap: 15px;
+                background: rgba(255, 255, 255, 0.9);
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            ">
+                <span style="font-size: 13px; color: #4a5568; font-weight: 600;">Score Scale:</span>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 24px; height: 16px; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 3px;"></div>
+                        <span style="font-size: 11px; color: #718096; font-weight: 500;">2.0</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 24px; height: 16px; background: #c6f6d5; border-radius: 3px;"></div>
+                        <span style="font-size: 11px; color: #718096; font-weight: 500;">4.0</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 24px; height: 16px; background: #68d391; border-radius: 3px;"></div>
+                        <span style="font-size: 11px; color: #718096; font-weight: 500;">6.0</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 24px; height: 16px; background: #38a169; border-radius: 3px;"></div>
+                        <span style="font-size: 11px; color: #718096; font-weight: 500;">8.0</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <div style="width: 24px; height: 16px; background: #2f855a; border-radius: 3px;"></div>
+                        <span style="font-size: 11px; color: #718096; font-weight: 500;">9.0+</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
     
     // Heatmap data from the original image - models and domains
     const heatmapModels = [
@@ -955,13 +1175,7 @@ function renderProblems(problems, containerId) {
         'DeepSeek-R1 7B', 'Mixtral-8x7B'
     ];
     
-    const domains = [
-        'Redundant Info (Original)', 'Redundant Info (Rewritten)', 'Multi-objective (Original)', 
-        'Multi-objective (Rewritten)', 'Knowledge (Original)', 'Knowledge (Rewritten)', 
-        'Uncertainty (Original)', 'Uncertainty (Rewritten)', 'Average (Original)', 'Average (Rewritten)'
-    ];
-    
-    // Create heatmap data matrix (simplified version for visualization)
+    // Create heatmap data matrix
     const heatmapData = [
         [9.134, 9.064, 8.295, 8.370, 8.701, 8.590, 8.782, 8.921, 8.552, 8.736], // Human Expert
         [8.334, 8.365, 7.419, 7.290, 6.598, 6.437, 6.081, 5.916, 7.108, 7.002], // GPT-4.1
@@ -982,87 +1196,114 @@ function renderProblems(problems, containerId) {
         [3.678, 4.443, 3.504, 3.319, 3.318, 3.248, 2.311, 2.893, 3.203, 3.476]  // Mixtral-8x7B
     ];
 
-    // Create a horizontal bar chart that mimics a heatmap
-    const datasets = domains.map((domain, domainIndex) => ({
-        label: domain,
-        data: heatmapModels.map((model, modelIndex) => heatmapData[modelIndex][domainIndex]),
-        backgroundColor: heatmapModels.map((model, modelIndex) => {
-            const value = heatmapData[modelIndex][domainIndex];
-            // Green color gradient based on value (3-9 range)
-            const intensity = (value - 3) / (9 - 3);
-            const greenValue = Math.floor(50 + intensity * 150); // 50-200 range for green
-            return `rgba(0, ${greenValue}, 0, 0.8)`;
-        }),
-        borderColor: 'rgba(255, 255, 255, 0.2)',
-        borderWidth: 1
-    }));
-
-    new Chart(level3HeatmapCtx, {
-        type: 'bar',
-        data: {
-            labels: heatmapModels,
-            datasets: [{
-                label: 'Average Score',
-                data: heatmapModels.map((model, index) => {
-                    // Calculate average across all domains for each model
-                    return heatmapData[index].reduce((a, b) => a + b, 0) / heatmapData[index].length;
-                }),
-                backgroundColor: heatmapModels.map((model, index) => {
-                    const avgValue = heatmapData[index].reduce((a, b) => a + b, 0) / heatmapData[index].length;
-                    // Green gradient based on average value
-                    const intensity = (avgValue - 3) / (9 - 3);
-                    const greenValue = Math.floor(50 + intensity * 150);
-                    return `rgba(0, ${greenValue}, 0, 0.8)`;
-                }),
-                borderColor: 'rgba(255, 255, 255, 0.2)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: 'y', // Make it horizontal to look more like a heatmap
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Level 3 Performance Heatmap (Average Scores)',
-                    font: { size: 14 }
-                },
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.label}: ${context.parsed.x.toFixed(2)}`;
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    beginAtZero: false,
-                    min: 3,
-                    max: 9,
-                    title: {
-                        display: true,
-                        text: 'Average Score',
-                        font: { size: 12 }
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
-                    }
-                },
-                y: {
-                    ticks: {
-                        font: { size: 9 }
-                    },
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
-                    }
-                }
-            }
+    // Function to get color based on value with improved gradient
+    function getHeatmapColor(value) {
+        const clampedValue = Math.max(2, Math.min(9.5, value));
+        
+        if (clampedValue <= 3) {
+            return '#f7fafc'; // Very light gray for low scores
+        } else if (clampedValue <= 4) {
+            return '#c6f6d5'; // Light green
+        } else if (clampedValue <= 5) {
+            return '#9ae6b4'; // Medium light green
+        } else if (clampedValue <= 6) {
+            return '#68d391'; // Medium green
+        } else if (clampedValue <= 7) {
+            return '#48bb78'; // Medium dark green
+        } else if (clampedValue <= 8) {
+            return '#38a169'; // Dark green
+        } else {
+            return '#2f855a'; // Very dark green for high scores
         }
+    }
+
+    // Function to get text color based on background
+    function getTextColor(value) {
+        return value > 6.5 ? 'white' : '#2d3748';
+    }
+
+    // Populate the table
+    const tbody = document.getElementById('heatmapTableBody');
+    heatmapModels.forEach((model, modelIndex) => {
+        const row = document.createElement('tr');
+        row.style.cssText = `
+            transition: all 0.2s ease;
+            ${modelIndex % 2 === 0 ? 'background: rgba(247, 250, 252, 0.5);' : ''}
+        `;
+        
+        // Add hover effect
+        row.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.01)';
+            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            this.style.zIndex = '10';
+            this.style.position = 'relative';
+        });
+        
+        row.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = 'none';
+            this.style.zIndex = 'auto';
+            this.style.position = 'static';
+        });
+        
+        // Model name cell
+        const modelCell = document.createElement('td');
+        modelCell.textContent = model;
+        modelCell.style.cssText = `
+            padding: 12px; 
+            text-align: left; 
+            border: none;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 600; 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #2d3748;
+            font-size: 11px;
+            position: sticky;
+            left: 0;
+            z-index: 5;
+        `;
+        row.appendChild(modelCell);
+        
+        // Data cells
+        heatmapData[modelIndex].forEach((value, valueIndex) => {
+            const cell = document.createElement('td');
+            cell.textContent = value.toFixed(3);
+            const bgColor = getHeatmapColor(value);
+            const textColor = getTextColor(value);
+            
+            cell.style.cssText = `
+                padding: 12px 8px; 
+                text-align: center; 
+                border: none;
+                border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+                border-right: 1px solid rgba(226, 232, 240, 0.3);
+                background: ${bgColor}; 
+                color: ${textColor};
+                font-weight: 600;
+                font-size: 11px;
+                transition: all 0.2s ease;
+                position: relative;
+            `;
+            
+            // Add hover effect for individual cells
+            cell.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.2)';
+                this.style.zIndex = '20';
+                this.style.borderRadius = '4px';
+            });
+            
+            cell.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = 'none';
+                this.style.zIndex = 'auto';
+                this.style.borderRadius = '0';
+            });
+            
+            row.appendChild(cell);
+        });
+        
+        tbody.appendChild(row);
     });
 
 }
