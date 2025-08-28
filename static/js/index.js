@@ -1238,5 +1238,433 @@ function renderProblems(problems, containerId) {
         
         tbody.appendChild(row);
     });
+    
+    // Initialize correlation analysis charts
+    initCorrelationCharts();
 
 }
+
+// --- Correlation Analysis Charts ---
+function initCorrelationCharts() {
+    // Correlation data matching the scatter plot
+    const correlationData = [
+        { model: "GPT-4.1", level12Avg: 0.85, level3Score: 7.0, color: "#DEB4B5" },
+        { model: "Claude 3.7 Sonnet", level12Avg: 0.82, level3Score: 6.5, color: "#DEB4B5" },
+        { model: "GPT-4.1 Mini", level12Avg: 0.78, level3Score: 6.4, color: "#DEB4B5" },
+        { model: "DeepSeek-V3", level12Avg: 0.81, level3Score: 6.3, color: "#8CB8D3" },
+        { model: "Gemini 2.5 Flash", level12Avg: 0.92, level3Score: 6.2, color: "#8CB8D3" },
+        { model: "Gemini 2.0 Flash", level12Avg: 0.81, level3Score: 6.0, color: "#8CB8D3" },
+        { model: "GPT-4.1 Nano", level12Avg: 0.78, level3Score: 5.5, color: "#8CB8D3" },
+        { model: "GLM-4-32B", level12Avg: 0.76, level3Score: 5.7, color: "#8CB8D3" },
+        { model: "GLM-4-9B", level12Avg: 0.66, level3Score: 5.2, color: "#8CB8D3" },
+        { model: "Claude 3.5 Sonnet", level12Avg: 0.88, level3Score: 5.0, color: "#8CB8D3" },
+        { model: "Llama 3.3", level12Avg: 0.68, level3Score: 5.0, color: "#8CB8D3" },
+        { model: "Qwen2.5-72B", level12Avg: 0.70, level3Score: 4.7, color: "#8CB8D3" },
+        { model: "Qwen2.5-7B", level12Avg: 0.62, level3Score: 4.6, color: "#8CB8D3" },
+        { model: "Llama 4", level12Avg: 0.88, level3Score: 3.8, color: "#DEB4B5" },
+        { model: "DeepSeek-R1 7B", level12Avg: 0.66, level3Score: 3.8, color: "#DEB4B5" },
+        { model: "Mixtral-8x7B", level12Avg: 0.52, level3Score: 3.5, color: "#8CB8D3" }
+    ];
+
+    // Chart 1: Correlation Scatter Plot with regression line
+    const correlationCtx = document.getElementById('correlationScatterChart');
+    if (correlationCtx) {
+        // Calculate regression line
+        const n = correlationData.length;
+        const sumX = correlationData.reduce((sum, d) => sum + d.level12Avg, 0);
+        const sumY = correlationData.reduce((sum, d) => sum + d.level3Score, 0);
+        const sumXY = correlationData.reduce((sum, d) => sum + d.level12Avg * d.level3Score, 0);
+        const sumXX = correlationData.reduce((sum, d) => sum + d.level12Avg * d.level12Avg, 0);
+        
+        const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+        const intercept = (sumY - slope * sumX) / n;
+        
+        // Generate regression line points
+        const regressionPoints = [
+            { x: 0.5, y: slope * 0.5 + intercept },
+            { x: 0.95, y: slope * 0.95 + intercept }
+        ];
+
+        new Chart(correlationCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    {
+                        label: 'Highlighted Models',
+                        data: correlationData.filter(d => d.color === "#DEB4B5").map(d => ({
+                            x: d.level12Avg,
+                            y: d.level3Score,
+                            modelName: d.model
+                        })),
+                        backgroundColor: '#DEB4B5',
+                        borderColor: '#DEB4B5',
+                        pointRadius: 8,
+                        pointHoverRadius: 10
+                    },
+                    {
+                        label: 'Other Models',
+                        data: correlationData.filter(d => d.color === "#8CB8D3").map(d => ({
+                            x: d.level12Avg,
+                            y: d.level3Score,
+                            modelName: d.model
+                        })),
+                        backgroundColor: '#8CB8D3',
+                        borderColor: '#8CB8D3',
+                        pointRadius: 8,
+                        pointHoverRadius: 10
+                    },
+                    {
+                        label: 'Regression Line',
+                        data: regressionPoints,
+                        type: 'line',
+                        borderColor: 'rgba(128, 128, 128, 0.8)',
+                        backgroundColor: 'rgba(128, 128, 128, 0.1)',
+                        fill: false,
+                        pointRadius: 0,
+                        pointHoverRadius: 0,
+                        showLine: true,
+                        tension: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: false
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        filter: function(tooltipItem) {
+                            return tooltipItem.datasetIndex < 2; // Only show tooltip for data points, not regression line
+                        },
+                        callbacks: {
+                            title: function(context) {
+                                return context[0].raw.modelName;
+                            },
+                            label: function(context) {
+                                return [
+                                    `Level 1&2 Avg: ${(context.raw.x * 100).toFixed(0)}%`,
+                                    `Level 3 Score: ${context.raw.y.toFixed(1)}`
+                                ];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        title: {
+                            display: true,
+                            text: 'Average Accuracy (Level 1 & 2)',
+                            font: { size: 14, weight: 'bold' }
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return (value * 100).toFixed(0) + '%';
+                            }
+                        },
+                        min: 0.5,
+                        max: 0.95,
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Level 3 Score',
+                            font: { size: 14, weight: 'bold' }
+                        },
+                        min: 3.2,
+                        max: 7.2,
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Chart 2: Model Comparison with Text Content
+    const performanceCtx = document.getElementById('performanceComparisonChart');
+    if (performanceCtx) {
+                 // Replace the canvas with HTML content for text display
+         const chartContainer = performanceCtx.parentElement;
+         chartContainer.innerHTML = `
+             <div style="
+                 background: #f8f9fa;
+                 border: 1px solid #e9ecef;
+                 border-radius: 8px;
+                 padding: 20px;
+                 height: 400px;
+                 overflow-y: auto;
+                 font-family: 'Google Sans', sans-serif;
+             ">
+                 <!-- Controls and Legend -->
+                 <div style="
+                     display: flex;
+                     justify-content: space-between;
+                     align-items: center;
+                     margin-bottom: 20px;
+                     flex-wrap: wrap;
+                     gap: 15px;
+                 ">
+                     <!-- Individual Toggle Buttons -->
+                     <div style="
+                         display: flex;
+                         flex-wrap: wrap;
+                         gap: 8px;
+                         align-items: center;
+                     ">
+                         <span style="font-size: 11px; font-weight: 600; margin-right: 5px;">Highlights:</span>
+                         <button class="capability-toggle" data-capability="info-extraction" onclick="toggleSpecificCapability('info-extraction')" style="
+                             background: #F5E6B8;
+                             color: #333;
+                             border: 2px solid #E6D09B;
+                             padding: 4px 8px;
+                             border-radius: 4px;
+                             cursor: pointer;
+                             font-size: 10px;
+                             font-weight: 600;
+                             transition: all 0.3s ease;
+                         ">Info Extract</button>
+                         <button class="capability-toggle" data-capability="multi-objective" onclick="toggleSpecificCapability('multi-objective')" style="
+                             background: #B8D4E3;
+                             color: #333;
+                             border: 2px solid #9BC4D6;
+                             padding: 4px 8px;
+                             border-radius: 4px;
+                             cursor: pointer;
+                             font-size: 10px;
+                             font-weight: 600;
+                             transition: all 0.3s ease;
+                         ">Multi-obj</button>
+                         <button class="capability-toggle" data-capability="uncertainty" onclick="toggleSpecificCapability('uncertainty')" style="
+                             background: #E8C5C5;
+                             color: #333;
+                             border: 2px solid #DBB0B0;
+                             padding: 4px 8px;
+                             border-radius: 4px;
+                             cursor: pointer;
+                             font-size: 10px;
+                             font-weight: 600;
+                             transition: all 0.3s ease;
+                         ">Uncertainty</button>
+                         <button class="capability-toggle" data-capability="domain-reasoning" onclick="toggleSpecificCapability('domain-reasoning')" style="
+                             background: #C5E8C5;
+                             color: #333;
+                             border: 2px solid #A8D8A8;
+                             padding: 4px 8px;
+                             border-radius: 4px;
+                             cursor: pointer;
+                             font-size: 10px;
+                             font-weight: 600;
+                             transition: all 0.3s ease;
+                         ">Domain Reason</button>
+                         <button onclick="toggleAllCapabilities()" style="
+                             background: #6c757d;
+                             color: white;
+                             border: none;
+                             padding: 4px 8px;
+                             border-radius: 4px;
+                             cursor: pointer;
+                             font-size: 10px;
+                             font-weight: 600;
+                             transition: all 0.3s ease;
+                             margin-left: 10px;
+                         ">All On/Off</button>
+                     </div>
+                 </div>
+
+                 <!-- GPT-4.1 Section -->
+                 <div style="
+                     background: white;
+                     border: 1px solid #ddd;
+                     border-radius: 8px;
+                     padding: 15px;
+                     margin-bottom: 15px;
+                 ">
+                     <div style="
+                         display: flex;
+                         align-items: center;
+                         margin-bottom: 10px;
+                     ">
+                         <div style="
+                             width: 24px;
+                             height: 24px;
+                             background: #333;
+                             border-radius: 50%;
+                             margin-right: 10px;
+                             display: flex;
+                             align-items: center;
+                             justify-content: center;
+                             color: white;
+                             font-size: 12px;
+                             font-weight: bold;
+                         ">⚙</div>
+                         <strong style="font-size: 16px;">GPT-4.1</strong>
+                         <span style="
+                             margin-left: auto;
+                             background: #e8f5e8;
+                             color: #2d5a2d;
+                             padding: 4px 8px;
+                             border-radius: 4px;
+                             font-size: 12px;
+                             font-weight: bold;
+                         ">Avg. Score: 8.25/10</span>
+                     </div>
+                     <div id="gpt41Content" style="font-size: 13px; line-height: 1.5;">
+                         We evaluate the impact of opening gated communities using a multi-level metric framework.<br>
+                         <span class="capability-highlight info-extraction"> At the network level, we define indicators such as road density, node degree, connectivity index, and betweenness centrality.<br>
+                         At the corridor and intersection level, we include delay, throughput, and LOS classification.<br>
+                                                   At the macro level, we assess total travel time, vehicle-kilometers traveled, emissions, and safety risks like crash hotspots <strong>(Information Extraction: 9/10)</strong></span>.<br>
+                          <span class="capability-highlight multi-objective"> We analyze trade-offs between increased access and new bottlenecks, and evaluate efficiency vs. safety in scenario outcomes <strong>(Multi-objective Decision-making: 7.5/10)</strong></span>.<br>
+                          <span class="capability-highlight uncertainty"> Sensitivity analysis is conducted under varying traffic volumes during peak/off-peak hours, using both static and dynamic traffic assignment models <strong>(Uncertainty Handling: 8/10)</strong></span>.<br>
+                          <span class="capability-highlight domain-reasoning">The road network is modeled as a graph, with intersections as nodes and roads as edges. We simulate different configurations using tools like SUMO and MATSim to support policy decisions <strong>(Domain-specific Reasoning: 8.5/10)</strong></span>.
+                     </div>
+                 </div>
+
+                 <!-- Llama 4 Section -->
+                 <div style="
+                     background: white;
+                     border: 1px solid #ddd;
+                     border-radius: 8px;
+                     padding: 15px;
+                 ">
+                     <div style="
+                         display: flex;
+                         align-items: center;
+                         margin-bottom: 10px;
+                     ">
+                         <div style="
+                             width: 24px;
+                             height: 24px;
+                             background: #007BFF;
+                             border-radius: 50%;
+                             margin-right: 10px;
+                             display: flex;
+                             align-items: center;
+                             justify-content: center;
+                             color: white;
+                             font-size: 12px;
+                             font-weight: bold;
+                         ">∞</div>
+                         <strong style="font-size: 16px;">Llama 4</strong>
+                         <span style="
+                             margin-left: auto;
+                             background: #ffe8e8;
+                             color: #8B0000;
+                             padding: 4px 8px;
+                             border-radius: 4px;
+                             font-size: 12px;
+                             font-weight: bold;
+                         ">Avg. Score: 3.5/10</span>
+                     </div>
+                     <div id="llama4Content" style="font-size: 13px; line-height: 1.5;">
+                                                   To evaluate the traffic impact of opening communities, <span class="capability-highlight info-extraction">we suggest measuring indicators such as average travel time, vehicle speed, traffic volume, intersection delay, and congestion index <strong>(Information Extraction: 6/10)</strong>.<br>
+                          <span style="color: #888; font-style: italic;">These metrics help assess traffic flow and efficiency but do not include environmental or safety dimensions</span> <span style="color: red; font-weight: bold;">✗</span>.<br></span>
+                          <span class="capability-highlight multi-objective"><span style="color: #888; font-style: italic;">We do not explicitly model trade-offs or consider the balance between multiple objectives like safety and efficiency</span> <span style="color: red; font-weight: bold;">🚫</span> <strong>(Multi-objective Decision-making: 0/10)</strong></span>.<br>
+                          <span class="capability-highlight uncertainty">Traffic volume and peak hour patterns are mentioned as contextual factors, <span style="color: #888; font-style: italic;">but no modeling or sensitivity analysis is performed</span> <strong>(Uncertainty Handling: 4/10)</strong></span>.<br>
+                          <span class="capability-highlight domain-reasoning">We propose using network analysis tools and traffic simulation models (e.g., VISSIM, SUMO), <span style="color: #888; font-style: italic;">but we do not describe how the models are constructed or used</span> <strong>(Domain-specific Reasoning: 4/10)</strong></span>.
+                     </div>
+                 </div>
+             </div>
+         `;
+         
+                  // Add CSS for capability highlights
+         const style = document.createElement('style');
+         style.textContent = `
+             .capability-highlight {
+                 padding: 2px 4px;
+                 border-radius: 2px;
+                 font-weight: 600;
+                 transition: all 0.3s ease;
+             }
+             .capability-highlight.info-extraction {
+                 background: #F5E6B8;
+             }
+             .capability-highlight.multi-objective {
+                 background: #B8D4E3;
+             }
+             .capability-highlight.uncertainty {
+                 background: #E8C5C5;
+             }
+             .capability-highlight.domain-reasoning {
+                 background: #C5E8C5;
+             }
+             .capability-highlight.info-extraction.hidden {
+                 background: transparent !important;
+             }
+             .capability-highlight.multi-objective.hidden {
+                 background: transparent !important;
+             }
+             .capability-highlight.uncertainty.hidden {
+                 background: transparent !important;
+             }
+             .capability-highlight.domain-reasoning.hidden {
+                 background: transparent !important;
+             }
+             .capability-toggle.disabled {
+                 opacity: 0.4;
+                 border-style: dashed !important;
+             }
+         `;
+         document.head.appendChild(style);
+     }
+ }
+
+ // Global functions for toggling individual capability highlights
+ function toggleSpecificCapability(capabilityType) {
+     const highlights = document.querySelectorAll(`.capability-highlight.${capabilityType}`);
+     const toggleButton = document.querySelector(`[data-capability="${capabilityType}"]`);
+     
+     if (!highlights.length || !toggleButton) return;
+     
+     const isHidden = highlights[0].classList.contains('hidden');
+     
+     highlights.forEach(highlight => {
+         if (isHidden) {
+             highlight.classList.remove('hidden');
+         } else {
+             highlight.classList.add('hidden');
+         }
+     });
+     
+     // Update button appearance
+     if (isHidden) {
+         toggleButton.classList.remove('disabled');
+     } else {
+         toggleButton.classList.add('disabled');
+     }
+ }
+
+ function toggleAllCapabilities() {
+     const allButtons = document.querySelectorAll('.capability-toggle');
+     const allHighlights = document.querySelectorAll('.capability-highlight');
+     
+     if (!allButtons.length) return;
+     
+     // Check if any capability is currently enabled
+     const anyEnabled = Array.from(allButtons).some(btn => !btn.classList.contains('disabled'));
+     
+     // Toggle all capabilities
+     ['info-extraction', 'multi-objective', 'uncertainty', 'domain-reasoning'].forEach(capability => {
+         const highlights = document.querySelectorAll(`.capability-highlight.${capability}`);
+         const button = document.querySelector(`[data-capability="${capability}"]`);
+         
+         if (anyEnabled) {
+             // Turn all off
+             highlights.forEach(h => h.classList.add('hidden'));
+             if (button) button.classList.add('disabled');
+         } else {
+             // Turn all on
+             highlights.forEach(h => h.classList.remove('hidden'));
+             if (button) button.classList.remove('disabled');
+         }
+     });
+ }

@@ -146,16 +146,7 @@
           <h2>Benchmark Design</h2>
           <p>EngiBench employs a systematic three-level hierarchical design to comprehensively evaluate engineering problem-solving capabilities. Each level targets specific cognitive skills, from foundational knowledge retrieval to complex open-ended modeling, while four core capability dimensions ensure thorough assessment across diverse engineering scenarios.</p>
           
-          <div class="stats-cards-container">
-            <div class="stat-card">
-              <div class="stat-value">3</div>
-              <div class="stat-label">Difficulty Levels</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">4</div>
-              <div class="stat-label">Capability Dimensions</div>
-            </div>
-          </div>
+
 
           <h3>Three-Level Hierarchical Structure</h3>
           <div class="design-levels">
@@ -264,16 +255,7 @@
           <h2>Dataset Construction</h2>
           <p>EngiBench is systematically constructed through diverse data sources and problem variants to ensure comprehensive evaluation of engineering problem-solving capabilities across different contexts and complexity levels.</p>
           
-          <div class="stats-cards-container">
-            <div class="stat-card">
-              <div class="stat-value">3</div>
-              <div class="stat-label">Data Sources</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">4</div>
-              <div class="stat-label">Problem Variants</div>
-            </div>
-          </div>
+
 
           <h3>Data Sources</h3>
           <p>EngiBench collects problems from three main sources to capture the diversity of real-world engineering challenges.</p>
@@ -393,6 +375,35 @@
               <li><strong>Open-ended Challenge:</strong> Even top-performing models like GPT-4.1 and Claude 3.7 Sonnet show substantial performance drops in Level 3 tasks, highlighting the difficulty of open-ended engineering reasoning.</li>
               
               <li><strong>Model Stratification:</strong> Clear performance tiers emerge, with larger models consistently outperforming smaller variants across all domains, emphasizing the importance of model scale for complex reasoning tasks.</li>
+            </ul>
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="white-bg">
+        <div class="content-container">
+          <h2>Correlation Analysis</h2>
+          <p>We analyze the relationship between foundational capabilities (Level 1 & 2 performance) and advanced reasoning skills (Level 3 performance) to understand how basic engineering knowledge correlates with complex problem-solving abilities.</p>
+          
+          <div class="charts-row">
+            <div class="chart-container">
+              <canvas id="correlationScatterChart"></canvas>
+            </div>
+            <div class="chart-container">
+              <canvas id="performanceComparisonChart"></canvas>
+            </div>
+          </div>
+          
+          <div class="correlation-analysis">
+            <ul class="correlation-findings-list">
+              <li><strong>Strong Positive Correlation:</strong> Models with higher Level 1 & 2 accuracy generally achieve better Level 3 scores, indicating that foundational engineering knowledge is crucial for complex reasoning tasks.</li>
+              
+              <li><strong>Performance Stratification:</strong> Clear performance tiers emerge across all difficulty levels, with top-tier models (GPT-4.1, Claude 3.7 Sonnet) consistently outperforming others across both foundational and advanced tasks.</li>
+              
+              <li><strong>Scaling Effects:</strong> Larger models demonstrate more consistent performance across difficulty levels, while smaller models show greater variability and struggle particularly with Level 3 open-ended tasks.</li>
+              
+              <li><strong>Knowledge Foundation Importance:</strong> The correlation suggests that robust performance on basic engineering concepts is a prerequisite for handling complex, open-ended engineering problems effectively.</li>
             </ul>
           </div>
           

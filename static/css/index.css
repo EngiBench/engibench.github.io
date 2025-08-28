@@ -353,6 +353,28 @@ table tbody tr:last-of-type {
     font-weight: 600;
 }
 
+/* Correlation Analysis Section Styles */
+.correlation-analysis {
+    margin: 40px 0 0 0;
+}
+
+.correlation-findings-list {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 20px 0;
+}
+
+.correlation-findings-list li {
+    margin: 10px 0;
+    line-height: 1.6;
+    color: #333;
+}
+
+.correlation-findings-list li strong {
+    color: #8B5A5C;
+    font-weight: 600;
+}
+
 /* Key Findings Section Styles */
 .key-findings-section {
     margin: 50px 0 0 0;
